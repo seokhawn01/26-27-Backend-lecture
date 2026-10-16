@@ -111,11 +111,11 @@ NoSQL은 이름 그대로 테이블 형태를 고집하지 않는 DBMS입니다
 
 이런 형태를 우리가 가장 흔히 보는 MySQL,PostgreSQL에서 볼 수 있습니다
 
-요즘은 ai 서비스가 늘면서 구조가 고정되지 않은 JSON 데이터를 많이 다루는데, PostgreSQL은 JSON 데이터를 NoSQL처럼 유연하게 다룰 수 있어서 많이 쓰인다고 합니다
+PostgreSQL은 JSON 데이터를 NoSQL처럼 유연하게 다룰 수 있어서 많이 쓰인다고 합니다
 
-**정리하면 구조가 정해져 있으면 RDBMS, 구조가 계속 바뀌면 NoSQL이 편하다고 보시면 됩니다**
+**정리하면 구조가 정해져 있으면 MySQL, 구조가 계속 바뀌면 NoSQL이 편하다고 보시면 됩니다**
 
-스터디에서는 계속 RDBMS 기준으로 진행하겠습니다
+스터디에서는 계속 MySQL 기준으로 진행하겠습니다
 
 ---
 
@@ -137,11 +137,9 @@ NoSQL은 이름 그대로 테이블 형태를 고집하지 않는 DBMS입니다
 
 세로 방향으로, 어떤 데이터를 담을지 미리 정해둔 자리입니다
 
-그림에서 점선으로 표시한 `name`이 열 하나이고, 여기에는 이름만 들어가게 됩니다
+ `name`이 있는 세로줄이 열 하나이고, 여기에는 이름에 대한 정보만 넣어야합니다
 
-열은 타입이 정해져 있어서 `age` 열에 `"스물넷"` 같은 문자를 넣으려고 하면 오류가 납니다
-
-1주차에서 봤던 타입안정성이 여기서도 그대로 적용된다고 보시면 됩니다
+테이블을 생성할 때, 타입을 지정해줘서  `age` 의 타입을 `int` 로 설정해주면 `"스물넷"` 같은 문자를 넣으려고 할때, 오류가 납니다
 
 ---
 
@@ -159,11 +157,11 @@ NoSQL은 이름 그대로 테이블 형태를 고집하지 않는 DBMS입니다
 
 **DML(Data Manipulation Language)**
 
-저장된 데이터에 대한 조작을 하는 명령어이고, 가장 많이 사용하게 될 명령어입니다 (`INSERT`, `UPDATE`, `DELETE`, `SELECT`)
+데이터 조작을 하는 명령어이고, 가장 많이 사용하게 될 명령어입니다 (`INSERT`, `UPDATE`, `DELETE`, `SELECT`)
 
 **DCL(Data Control Language)**
 
-누가 이 데이터를 건드릴 수 있는지 권한을 주고 뺏는 명령어입니다 (`GRANT`, `REVOKE`)
+데이터 조작 권한을 주고 뺏는 명령어입니다 (`GRANT`, `REVOKE`)
 
 ---
 
@@ -212,7 +210,7 @@ DELETE FROM member WHERE id = 5;
 
 값 하나만 비우고 싶으시면 `DELETE`가 아니라 `UPDATE`로 그 자리에 `NULL`을 넣어주면 됩니다
 
-**여기서도** `WHERE`**를 빼먹으면 테이블의 모든 행이 지워지기 때문에,** `UPDATE`**와** `DELETE`**는** `WHERE`**를 붙였는지 꼭 확인하고 실행하셔야 합니다**
+**여기서도** `WHERE`**를 빼먹으면 테이블의 모든 행이 지워지기 때문에,** `UPDATE`**와** `DELETE`**는** `WHERE`**를 붙였는지 꼭 확인하고 실행하셔야 합니다!!**
 
 ---
 
@@ -275,7 +273,7 @@ SELECT name, age FROM member WHERE age >= 24;
 | `BETWEEN a AND b`        | a 이상 b 이하인 값을 찾습니다   |
 | `IN (a, b, c)`           | 나열한 값들 중 하나인 값을 찾습니다 |
 | `LIKE '김%'`              | `김`으로 시작하는 값을 찾습니다   |
-| `IS NULL`, `IS NOT NULL` | 값이 비어있는지 여부로 찾습니다    |
+| `IS NULL`, `IS NOT NULL` | 값이 비어있는지의 여부로 찾습니다   |
 | `AND`, `OR`, `NOT`       | 조건을 여러개 묶어줍니다        |
 
 
@@ -329,7 +327,7 @@ SELECT age, COUNT(*) FROM member GROUP BY age HAVING COUNT(*) >= 2;
 
 2명 이상인 나이만 남기라고 했더니 `24`살 그룹만 남은걸 확인할 수 있습니다
 
-`WHERE`랑 뭐가 다른지 헷갈리실텐데, `WHERE`는 묶기 전의 행에 거는 조건이고 `HAVING`은 group by로 묶은 다음의 그룹에 거는 조건입니다.
+`WHERE`랑 뭐가 다른지 헷갈리실텐데, `WHERE`는 group by로 묶기 전의 행한테 거는 조건이고 `HAVING`은 group by로 묶은 다음의 그룹에 거는 조건입니다.
 
 그렇다면 실행순서는 `WHERE` 이 `GROUP BY` 보다 빠르겠죠?
 
@@ -350,13 +348,13 @@ SELECT name, age FROM member ORDER BY age DESC;
 | 김서령  | 20  |
 
 
-나이가 큰 순서대로 줄세워진걸 확인할 수 있습니다
-
 `ASC`는 오름차순, `DESC`는 내림차순이고 아무것도 안 적으면 오름차순이 기본값입니다
+
+`order by` 뒤에 정렬기준이 될 열을 쓰시면 됩니다. 여기선 `age` 를 썼으니 나이가 큰 순서대로 줄세워진걸 확인할 수 있습니다
 
 ## 작성 순서와 실행 순서
 
-지금까지 본 자리들을 순서대로 적으면 이렇게 됩니다
+지금까지 본 명령어를 순서대로 적으면 이렇게 됩니다
 
 ```sql
 SELECT   age, COUNT(*)
@@ -377,15 +375,9 @@ ORDER BY age DESC;
 
 
 
-## 테이블을 나누는 이유
+## JOIN의 필요성
 
-회원 정보와 회원이 쓴 글을 한 테이블에 다 넣는다고 생각해보겠습니다
-
-그러면 삭님이 글을 10개 쓸때마다 이름과 나이가 10번 중복해서 저장되겠죠?
-
-그래서 회원은 `member`테이블,  글은 `post` 테이블로 나누고, `post`에는 누가 썼는지 알 수 있게 `member_id`만 들고있게 만듭니다 
-
-아래는 `post` 테이블입니다
+이번에는 회원이 쓴 글인 `post` 테이블을 만들어보겠습니다.
 
 
 | member_id | title  |
@@ -395,9 +387,9 @@ ORDER BY age DESC;
 | 3         | DB 정리  |
 
 
-`member_id`는 이 글을 누가 썼는지를 나타내고, `2`번인 삭님이 글을 두개 쓴걸 확인할 수 있습니다
+`post`테이블과 `member`테이블을 합쳐서 게시판 같은 또다른 의미 있는 데이터를 만들어 낼 수 있겠죠? 
 
-이렇게 나눠둔 테이블을 다시 하나로 붙여서 보는게 JOIN입니다
+이렇게 테이블들을 하나로 붙여서 보는게 JOIN입니다
 
 ## INNER JOIN
 
@@ -405,7 +397,7 @@ ORDER BY age DESC;
 
 ![INNER JOIN 동작](media/4st-media/조인-inner.png)
 
-그림에서 주황 점선으로 표시한 `id`와 `member_id`가 두 테이블을 이어주는 기준이 되는 열입니다
+그림에서 주황 점선으로 표시한 `id`와 `member_id`가 두 테이블의 기본키 입니다. 기본키란 행을 구분해줄 수 있는 열입니다
 
 이 두 열의 값이 같은 것끼리 주황 선으로 이어진걸 확인할 수 있습니다
 
@@ -429,23 +421,13 @@ INNER JOIN post ON member.id = post.member_id;
 | 안정민  | DB 정리  |
 
 
-여기서 이삭이 두 번 나오는건, 글이 두개라서 글마다 한 줄씩 만들어졌기 때문입니다
-
 `ON` 뒤에는 두 테이블을 어떤 기준으로 이을지 적어주면 됩니다
 
-그리고 테이블 이름을 매번 적기 귀찮으면 별칭(as)을 붙여서 짧게 쓸 수 있습니다. 
-
-```sql
-SELECT m.name, p.title
-FROM member m
-INNER JOIN post p ON m.id = p.member_id;
-```
+그리고 테이블 이름을 매번 적기 귀찮으면 별칭(as)을 붙여서 짧게 쓸 수 있습니다.
 
 참고로 `INNER`를 생략하고 `JOIN`만 적어도 똑같이 동작합니다
 
-## 나머지 조인은 과제입니다
-
-조인에는 `INNER JOIN` 말고도 `OUTER JOIN`, `NATURAL JOIN` 등등 더 있습니다
+조인은 `OUTER JOIN`, `NATURAL JOIN` 등등 더 있습니다
 
 시간상 다 다루지는 못했으니, [SQL JOIN 총정리](https://velog.io/@wjpark4430/SQL-JOIN-총정리-INNER-OUTER-CROSS-SELF-JOIN) 글로 나머지 조인을 따로 공부해보시는걸 추천합니다!
 
@@ -453,44 +435,21 @@ INNER JOIN post p ON m.id = p.member_id;
 
 
 
-# 전체 정리
+# ORM
 
+JPA에 대해 알아보기에 먼저 ORM에 대해서 짚고 가겠습니다. 
 
+ORM(Object-Relational Mapping)이란 자바의 객체와 관계형 데이터베이스의 테이블을 자동으로 연결해주는 기술입니다.
 
-## 명령어 한눈에 보기
-
-지금까지 본 명령어들을 표로 정리해봤습니다
-
-
-| 명령어          | 하는 일               | 예시                                              |
-| ------------ | ------------------ | ----------------------------------------------- |
-| `INSERT`     | 행을 넣습니다            | `INSERT INTO member ... VALUES ...`             |
-| `UPDATE`     | 저장된 값을 바꿉니다        | `UPDATE member SET age = 30 WHERE id = 4`       |
-| `DELETE`     | 행을 지웁니다            | `DELETE FROM member WHERE id = 5`               |
-| `SELECT`     | 어느 열을 볼지 고릅니다      | `SELECT name, age`                              |
-| `FROM`       | 어느 테이블에서 꺼낼지 고릅니다  | `FROM member`                                   |
-| `WHERE`      | 묶기 전, 행에 조건을 겁니다   | `WHERE age >= 24`                               |
-| `GROUP BY`   | 같은 값끼리 묶습니다        | `GROUP BY age`                                  |
-| `HAVING`     | 묶은 다음, 그룹에 조건을 겁니다 | `HAVING COUNT(*) >= 2`                          |
-| `ORDER BY`   | 결과를 정렬합니다          | `ORDER BY age DESC`                             |
-| `INNER JOIN` | 양쪽에 다 있는 것만 붙입니다   | `INNER JOIN post ON member.id = post.member_id` |
-
-
----
-
-
+또한 3주차때 배운 `CRUD` 작업을 편리하게 할 수 있습니다.
 
 # JPA
 
-SQL은 여기까지 보고, 다음으론 JPA에 대해 이어서 알아보도록 하겠습니다
-
-## JPA는 무엇인가요
-
-JPA(Java Persistence API)는 자바 객체와 관계형 데이터베이스 테이블을 연결해서, SQL을 직접 많이 작성하지 않고 DB를 다룰 수 있게 해주는 기술입니다
+JPA(Java Persistence API)는 이런 ORM을 표준으로 사용하는 인터페이스의 모음입니다.
 
 정의를 알아보았으니 이걸 왜 사용하는지 알아봐야겠죠?
 
-## SQL을 직접 쓰면 생기는 일
+## JPA가 없을때
 
 자바는 JDBC API를 통해 SQL을 데이터베이스에 전달합니다
 
@@ -512,63 +471,15 @@ SELECT name FROM member;
 SELECT name, age FROM member;
 ```
 
-여기서 끝나는게 아니라, 이 결과를 받아서 담아주던 자바 코드도 전부 같이 고쳐야 합니다
+이렇게 계속해서 SQL문을 수정해야 합니다... 하지만 앞서 배운 ORM이 있다면 이런 객체와 데이터베이스간의 변환이 자동화됩니다!
 
-3주차때 했던 패키지 구조로 보면, `repository`에서 SQL을 직접 쓰는 코드는 대략 이렇게 생겼습니다
-
-```java
-// MemberRepository - JDBC로 직접 쓸 때
-String sql = "SELECT name, age FROM member";        // ① SQL 문자열 수정
-ResultSet rs = statement.executeQuery(sql);
-while (rs.next()) {
-    Member member = new Member();
-    member.setName(rs.getString("name"));
-    member.setAge(rs.getInt("age"));                 // ② 결과를 꺼내 담는 코드 추가
-    members.add(member);
-}
-```
-
-`Member`에 `age` 필드 하나를 추가했을 뿐인데, ①번 SQL 문자열과 ②번 결과를 꺼내 담는 코드까지 개발자가 직접 맞춰줘야 하는걸 볼 수 있습니다
-
-**즉, 객체는 객체대로 SQL은 SQL대로 따로 관리하게 되어서, 한쪽이 바뀔 때마다 나머지 한쪽도 같이 고쳐야 하는 문제가 생깁니다**
-
-## 그래서 나온게 ORM입니다
-
-이렇게 자바의 객체와 관계형 데이터베이스의 테이블을 자동으로 연결해주는 기술을 ORM(Object-Relational Mapping)이라고 합니다
-
-이름 그대로 객체(Object)와 관계형(Relational) 데이터를 매핑(Mapping)해준다는 뜻입니다
-
-자바에서 ORM을 쓰게 해주는 JPA를 쓰면, 아까 그 `repository` 코드가 이렇게 바뀝니다
-
-```java
-// MemberRepository - JPA를 쓸 때
-public interface MemberRepository extends JpaRepository<Member, Long> {
-}   // 손댈게 없음
-```
-
-`Member`에 `age` 필드만 추가하면, JPA가 `SELECT name, age ...`를 알아서 만들고 결과도 `age`에 알아서 담아줍니다. 
-
-## JPA와 ORM의 관계
-
-ORM은 객체와 테이블을 연결해주는 기술의 이름이고, JPA는 자바에서 ORM을 어떻게 쓸지 정해둔 표준입니다
-
-JPA는 이렇게 하자고 정해둔 인터페이스 모음이라서, 실제로 일을 하는 구현체가 따로 있는데 스프링에서 기본으로 쓰는게 Hibernate입니다
-
-실습에서 `application.yml`에 적을 `hibernate` 설정도 바로 이 Hibernate에 대한 설정입니다
-
-**즉, 우리는 JPA라는 표준에 맞춰 코드를 쓰고, 실제 매핑은 Hibernate가 해준다고 보시면 됩니다**
-
-Hibernate가 어떻게 매핑하는지는 동작 과정을 먼저 보고 나서 살펴보겠습니다
-
-## JPA의 동작 과정
+## JPA 동작 과정
 
 그럼 JPA가 실제로 어떻게 동작하는지 그림으로 살펴보겠습니다
 
 ![JPA 동작 과정](media/4st-media/jpa-동작과정.png)
 
 왼쪽에는 `Member` 객체가 있고, 오른쪽에는 DB에 저장되어 있는 `member` 테이블이 있습니다
-
-가운데 JPA 맨 위에는 아까 본 `Repository`가 있는데, 우리 코드는 JPA를 직접 부르지 않고 `save()`, `findById()` 같은 `Repository`의 메서드를 통해 JPA에게 일을 맡깁니다
 
 그림의 화살표를 번호 순서대로 따라가보겠습니다
 
@@ -581,100 +492,14 @@ Hibernate가 어떻게 매핑하는지는 동작 과정을 먼저 보고 나서 
 | ④   | JPA → 애플리케이션 | JPA가 그 결과를 다시 `Member` 객체에 돌려줍니다                                            |
 
 
-**여기서 중요한건 SQL이 오가는 ②번과 ③번을 우리가 직접 쓰지 않는다는 점입니다**
 
-**우리는 객체만 다루고, SQL을 만들고 결과를 다시 객체로 바꾸는 일은 JPA가 대신 해준다고 보시면 됩니다**
-
-여기서 ②번처럼 객체를 SQL로 바꾸고, ④번처럼 결과를 다시 객체로 바꾸는 일이 바로 앞에서 본 ORM의 매핑입니다
-
-그래서 아까처럼 나이가 추가되어도, 객체에 필드만 추가해주면 SQL은 JPA가 알아서 다시 만들어줍니다
-
-## Hibernate가 매핑하는 방법
-
-그럼 ②번에서 어떤 SQL을 만들지, ④번에서 결과를 어느 필드에 담을지는 어떻게 아는걸까요?
-
-그림에서 JPA라고 적어둔 가운데 부분에서 실제로 이 일을 하는게 Hibernate입니다
-
-**먼저 애플리케이션을 켤 때 매핑 정보를 만들어 둡니다**
-
-Hibernate는 애플리케이션이 켜질 때 `@Entity`가 붙은 클래스를 전부 찾아서, 클래스와 필드를 하나씩 읽어둡니다
-
-```java
-@Entity
-public class Member {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String name;
-    private int age;
-}
-```
-
-어노테이션은 바로 뒤에서 하나씩 보니까, 지금은 이런 표시가 붙어있구나 정도로만 봐주시면 됩니다
-
-이 클래스를 읽고 나면 Hibernate는 이런 짝을 기억해둡니다
-
-
-| 자바           | DB                            |
-| ------------ | ----------------------------- |
-| `Member` 클래스 | `member` 테이블                  |
-| `id` 필드      | `id` 열 (기본키, DB가 자동으로 번호를 매김) |
-| `name` 필드    | `name` 열                      |
-| `age` 필드     | `age` 열                       |
-
-
-이 짝을 매핑 정보라고 하고, ②번과 ④번은 전부 이 표를 보고 움직입니다
-
-**저장할 때는 객체를 SQL로 바꿉니다 (②번)**
-
-```java
-memberRepository.save(member);  // name = "이길수", age = 24 인 Member 객체
-```
-
-```sql
--- Hibernate가 매핑 정보를 보고 만든 SQL
-insert into member (age, name) values (?, ?)
--- ? 자리에는 member 객체의 age 값 24, name 값 '이길수'가 차례대로 들어갑니다
-```
-
-`id`는 DB가 알아서 번호를 매겨주도록 해뒀기 때문에 SQL에서 빠져있는걸 볼 수 있습니다
-
-**조회할 때는 결과를 다시 객체로 바꿉니다 (④번)**
-
-```java
-memberRepository.findById(1L);  // id가 1인 회원 조회
-```
-
-```sql
--- Hibernate가 매핑 정보를 보고 만든 SQL
-select m1_0.id, m1_0.age, m1_0.name from member m1_0 where m1_0.id = ?
--- m1_0은 Hibernate가 member 테이블에 붙인 별칭입니다
-```
-
-DB가 결과 한 줄을 돌려주면, Hibernate는 먼저 매개변수가 없는 생성자로 빈 `Member` 객체를 만듭니다
-
-그리고 매핑 정보를 보고 `id` 열 값은 `id` 필드에, `name` 열 값은 `name` 필드에, `age` 열 값은 `age` 필드에 채워 넣습니다
-
-아까 JDBC 코드에서 우리가 `rs.getString("name")`으로 꺼내서 `member.setName()`에 직접 담던 부분을 Hibernate가 대신 해주는 셈입니다
-
-이때 setter를 부르지 않고 필드에 바로 값을 넣기 때문에, 엔티티에 setter가 없어도 괜찮습니다
-
-뒤에서 엔티티를 만들 때 `@NoArgsConstructor`를 꼭 붙이는데, Hibernate가 이렇게 빈 객체부터 만들기 때문입니다
-
-실습에서 `show_sql: true`를 켜두면, 콘솔에 `Hibernate:`로 시작하는 줄로 이 SQL이 그대로 찍히는걸 확인할 수 있습니다
-
-**그래서** `Member`**에 필드를 하나 추가하면 매핑 정보에 열이 하나 늘어나고, SQL에도 그 열이 알아서 붙게 됩니다**
 
 ## JPA의 장점
 
-동작 과정을 봤으니, JPA를 쓰면 어떤 점이 좋은지 하나씩 정리해보겠습니다
-
-먼저 한눈에 보면 이렇습니다
+동작 과정을 봤으니, JPA를 쓰면 어떤 점이 좋은지 정리해보겠습니다
 
 
-| 장점    | 한마디로                                 |
+| 장점    | 설명                                   |
 | ----- | ------------------------------------ |
 | 생산성   | 반복되는 CRUD SQL을 직접 쓰지 않아도 됩니다         |
 | 유지보수  | 객체에 필드만 고치면 SQL은 JPA가 다시 만들어줍니다      |
@@ -690,6 +515,12 @@ DB가 결과 한 줄을 돌려주면, Hibernate는 먼저 매개변수가 없는
 회원 이름만 보고 싶은데 그 회원이 쓴 글 100개까지 같이 딸려오면 낭비겠죠?
 
 뒤에서 코드를 작성할 때 나오는 `fetch = FetchType.LAZY`가 바로 이 지연 로딩을 쓰겠다는 뜻입니다
+
+반대인 `FetchType.EAGER`는 엔티티를 조회할때, 연관된 엔티티까지 한번에 같이 가져옵니다 
+
+그래서 `EAGER`로 두면 쓰지도 않는 데이터까지 매번 같이 끌고와서 쿼리가 생각보다 많이 나갈 수 있습니다
+
+그래서 보통은 전부 `LAZY`로 두고, 같이 필요할 때만 따로 가져오는 방식을 많이 씁니다
 
 ## 트랜잭션이란?
 
@@ -711,7 +542,7 @@ DB가 결과 한 줄을 돌려주면, Hibernate는 먼저 매개변수가 없는
 
 `@Entity`는 이 클래스가 DB 테이블과 연결되는 클래스라고 표시해주는 어노테이션입니다
 
-이렇게 표시해둔 클래스를 엔티티(Entity)라고 부르고, JPA는 이 표시가 붙어있는 클래스만 관리해줍니다
+JPA는 이 표시가 붙어있는 클래스만 관리해줍니다
 
 ```java
 @Entity
@@ -751,9 +582,7 @@ public class Member {
 
 ## @Id
 
-`@Id`는 이 필드가 테이블의 기본키(Primary Key)라고 표시해주는 어노테이션입니다
-
-기본키는 행 하나하나를 구분해주는 값이고, `member` 테이블에서는 `id` 열이 그 역할을 하고 있었습니다
+`@Id`는 이 필드가 테이블의 기본키라고 표시해주는 어노테이션입니다
 
 엔티티에는 `@Id`가 반드시 하나 있어야 하고, JPA는 이 값으로 어느 행인지를 찾아갑니다
 
@@ -784,7 +613,7 @@ private Long id;
 
 ## @Column
 
-`@Column`은 필드와 연결될 열의 이름이나 조건을 직접 정해주는 어노테이션입니다
+`@Column`은 필드(변수)와 연결될 열의 이름이나 조건을 직접 정해주는 어노테이션입니다
 
 ```java
 @Column(name = "userName", nullable = false, length = 20)
@@ -811,9 +640,21 @@ JOIN에서 봤던 회원과 글의 관계를 다시 가져와보겠습니다
 
 이걸 어느 쪽 입장에서 보느냐에 따라 부르는 이름이 달라집니다
 
-$\color{#9A6A3A}\textsf{@ManyToOne}$
+### @OneToMany
 
-글 여러개(Many)가 회원 한명(One)을 바라보는 쪽이고, 외래키를 들고있는 쪽입니다
+회원 한명(One)이 글 여러개(Many)를 바라보는 쪽입니다.
+
+```java
+// Member 클래스
+@OneToMany(mappedBy = "member")
+private List<Post> posts = new ArrayList<>();
+```
+
+`mappedBy`에는 상대방인 `Post`에서 나를 가리키고 있는 필드의 이름을 적어줍니다
+
+### @ManyToOne
+
+반대로 회원 한명(One)이 글 여러개(Many)를 들고있는 쪽입니다.
 
 ```java
 // Post 클래스
@@ -828,21 +669,9 @@ private Member member;
 
 `post`의 `member_id`에는 `member` 테이블의 기본키인 `id` 값이 들어가 있어서, 이 값만 보고도 글을 쓴 회원이 누구인지 찾아갈 수 있습니다
 
-$\color{#9A6A3A}\textsf{@OneToMany}$
-
-반대로 회원 한명(One)이 글 여러개(Many)를 들고있는 쪽이고, 그림의 `posts` 리스트가 이 부분입니다
-
-```java
-// Member 클래스
-@OneToMany(mappedBy = "member")
-private List<Post> posts = new ArrayList<>();
-```
-
-`mappedBy`에는 상대방인 `Post`에서 나를 가리키고 있는 필드의 이름을 적어줍니다
-
-**외래키를 실제로 들고있는 쪽은 항상** `@ManyToOne`**이 붙은 쪽이라는 점만 기억하시면 됩니다**
-
 ---
+
+
 
 # 실습해보기
 
@@ -879,8 +708,6 @@ CREATE TABLE student (
     FOREIGN KEY (course_id) REFERENCES course (id)
 );
 ```
-
-
 
 그리고 import 버튼을 눌러주신다면...
 
@@ -957,6 +784,8 @@ spring:
 
 주소와 비밀번호를 그대로 적으면 깃허브에 그대로 올라가기 때문에, `${}`로 적어두고 값은 환경변수로 넣어주겠습니다
 
+여기서 `hibernate` 의  `ddl-auto` 에 대해 알아보겠습니다
+
 ## ddl-auto 옵션
 
 `ddl-auto`는 애플리케이션을 켤 때 테이블을 어떻게 할지 정해주는 값입니다
@@ -972,6 +801,8 @@ spring:
 
 
 `create`**는 켤 때마다 테이블을 지우고 다시 만들기 때문에, 데이터가 남아야 하는 곳에서는 절대 쓰시면 안됩니다**
+
+`hibernate` 에 대해 더 자세히 알고싶으신 분은  [https://suhwan.dev/2019/02/24/jpa-vs-hibernate-vs-spring-data-jpa/](https://suhwan.dev/2019/02/24/jpa-vs-hibernate-vs-spring-data-jpa/)을 참고해주시면 됩니다!
 
 ## 환경변수 넣기
 
@@ -1018,11 +849,11 @@ spring:
 
 강의 하나에는 학생이 여러명 들어갈 수 있으니, 강의(One)와 학생(Many)의 관계가 됩니다
 
-**그래서 외래키인** `course_id`**는 학생 쪽이 들고있게 되고,** `Student`**가** `@ManyToOne`**,** `Course`**가** `@OneToMany`**를 가집니다**
-
 ## Domain 만들기
 
-$\color{#9A6A3A}\textsf{Course.java}$
+
+
+### Course
 
 ```java
 @Entity
@@ -1050,31 +881,9 @@ public class Course {
 }
 ```
 
-강의 하나가 학생 여러명을 가지고 있으니 `@OneToMany`입니다
+여기서부턴 앞에서 다루지 않았던 부분들에 대해서 짚고 넘어가겠습니다
 
-`courseName`은 카멜케이스라서 DB에는 `course_name` 열로 만들어집니다
-
-```java
-@OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-```
-
-`@OneToMany` 괄호 안에 옵션이 여러개 붙어있는데 하나씩 보겠습니다
-
-$\color{#9A6A3A}\textsf{fetch = FetchType.LAZY}$
-
-`fetch`는 연관된 객체를 언제 DB에서 가져올지 정하는 옵션입니다
-
-`FetchType.LAZY`는 지연 로딩이라고 해서, 강의를 조회할 때 학생 목록은 바로 가져오지 않고 실제로 꺼내서 쓰는 순간에 쿼리를 날립니다
-
-반대인 `FetchType.EAGER`는 강의를 조회하는 순간 학생 목록까지 한번에 같이 가져옵니다
-
-`EAGER`로 두면 쓰지도 않는 데이터까지 매번 같이 끌고와서 쿼리가 생각보다 많이 나갈 수 있습니다
-
-그래서 보통은 전부 `LAZY`로 두고, 같이 필요할 때만 따로 가져오는 방식을 많이 씁니다
-
-`@OneToMany`는 기본값이 `LAZY`라서 사실 안 적어도 되지만, `@ManyToOne`은 기본값이 `EAGER`라서 `Student`쪽에는 꼭 적어줘야 합니다
-
-$\color{#9A6A3A}\textsf{cascade = CascadeType.ALL}$
+#### 1.`cascade = CascadeType.ALL`
 
 `cascade`는 부모 엔티티에 한 작업을 자식 엔티티에도 그대로 전달하는 옵션입니다
 
@@ -1082,37 +891,31 @@ $\color{#9A6A3A}\textsf{cascade = CascadeType.ALL}$
 
 강의를 지우면 그 강의를 듣는 학생들도 같이 지워진다는 점은 꼭 알아두셔야 합니다
 
-$\color{#9A6A3A}\textsf{orphanRemoval = true}$
+#### 2.`orphanRemoval = true`
 
 `orphanRemoval`은 부모와의 연결이 끊어진 자식을 자동으로 지워주는 옵션입니다
 
-뒤에서 만들 Service 코드를 변형해서 예시를 들어보겠습니다
+#### 3.`findById()`
 
-```java
-@Transactional
-public void removeStudentFromCourse(Long courseId) {
-    Course course = courseRepository.findById(courseId).orElseThrow(); // 강의를 DB에서 꺼내옵니다
-    Student student = course.getStudents().get(0);                     // 그 강의의 첫번째 학생
+`id`로 DB에서 데이터를 꺼내오는 메서드입니다
 
-    course.getStudents().remove(student);                              // 강의의 학생 목록에서 빼기만 합니다
-}
-```
+#### 4.`@Transactional`
 
-`findById()`는 `id`로 DB에서 데이터를 꺼내오는 메서드이고, `@Transactional`은 이 메서드 안의 작업을 하나로 묶어주는 어노테이션입니다
+이 메서드 안의 작업을 하나로 묶어주는 어노테이션입니다
 
 코드를 보시면 학생을 삭제하는 코드는 한줄도 없고, 강의의 학생 목록에서 빼기만 한걸 볼 수 있습니다
 
-이렇게 부모를 잃은 자식을 고아(orphan)라고 부르고, `orphanRemoval = true`가 붙어있으면 메서드가 끝날 때 JPA가 `DELETE` 쿼리를 날려서 이 학생 행을 DB에서 알아서 지워줍니다
+#### 5.`@NoArgsConstructor`
 
-`cascade`는 부모가 삭제될 때 자식도 같이 지우는 거라면, `orphanRemoval`은 부모는 그대로 있고 관계만 끊겨도 자식을 지운다는 차이가 있습니다
+매개변수가 없는 생성자를 만들어줍니다
 
-`@NoArgsConstructor` 는 매개변수가 없는 생성자를 만들어줍니다
+#### 6.`@Getter`
 
-`@Getter`는 `getName()`, `getMajor()` 같은 메서드가 자동으로 만들어집니다
+`getName()`, `getMajor()` 같은 메서드가 자동으로 만들어집니다
 
-$\color{#9A6A3A}\textsf{@Builder}$
+#### 7.`@Builder`
 
-`@Builder`는 객체를 만들 때 생성자 대신 필드 이름을 하나씩 적어가며 만들 수 있게 해주는 Lombok 어노테이션입니다
+객체를 만들 때 생성자 대신 필드 이름을 하나씩 적어가며 만들 수 있게 해주는 Lombok 어노테이션입니다
 
 ```java
 // 생성자로 만들 때
@@ -1126,13 +929,23 @@ Student.builder()
         .build();
 ```
 
-생성자로 만들면 매개변수 순서를 외워야 하고, 둘다 `String`인 `name`과 `major`의 순서가 바뀌어도 컴파일오류가 나지 않습니다
 
-빌더는 어떤 값이 어디에 들어가는지 이름이 보이니까 이런 실수를 줄일 수 있습니다
 
-여기서는 `@Builder`를 클래스가 아니라 생성자 위에 붙였는데, 이렇게 하면 생성자 매개변수에 있는 값만 빌더로 넣을 수 있습니다
+#### 가독성 향상
 
-$\color{#9A6A3A}\textsf{Student.java}$
+지금은 파라미터의 개수가 적어서 가독성이 나쁘지 않아보이지만 파라미터의 개수가 더욱 늘어난다면....?
+
+```
+new Student("김석환", "컴퓨터공학과", course,'a','b','c','d','e'); 
+```
+
+가독성이 안좋아진게 바로 느껴지실겁니다. 그러므로 빌더를 통해 가독성을 높일 수 있습니다
+
+#### 어떤 값을 먼저 설정하던 상관이 없다
+
+생성자의 경우는 정해진 파라미터 순서대로 값을 넣어야만 합니다. 하지만 빌더의 경우는 순서에 종속적이지 않습니다.
+
+### Student
 
 ```java
 @Entity
@@ -1168,7 +981,7 @@ public class Student {
 }
 ```
 
-학생 여러명이 강의 하나를 바라보고 있으니 `@ManyToOne`이고, `@JoinColumn`에 적은 `course_id`가 실제 테이블에 만들어지는 외래키 열입니다
+
 
 ## Repository 만들기
 
@@ -1190,7 +1003,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
 `dto` 패키지에, 요청을 받을 DTO와 응답을 내보낼 DTO를 만들어줍니다
 
-$\color{#9A6A3A}\textsf{Course DTO}$
+### CourseSaveRequestDto
 
 ```java
 @Getter
@@ -1199,6 +1012,10 @@ public class CourseSaveRequestDto {
     private String professor;
 }
 ```
+
+강의를 저장할 때 클라이언트로부터 전달받은 데이터를 저장하는 클래스입니다
+
+### CourseInfoResponseDto
 
 ```java
 @Builder
@@ -1218,9 +1035,13 @@ public class CourseInfoResponseDto {
 }
 ```
 
-`from()`은 `Course` 객체를 응답용 DTO로 바꿔주는 메서드입니다
+클라이언트에게 전달할 데이터를 담는 객체입니다
 
-$\color{#9A6A3A}\textsf{Student DTO}$
+#### 1.`from()`
+
+`Course` 객체를 응답용 DTO로 바꿔주는 메서드입니다
+
+### StudentSaveRequestDto
 
 ```java
 @Getter
@@ -1230,6 +1051,10 @@ public class StudentSaveRequestDto {
     private String major;
 }
 ```
+
+학생를 저장할 때 클라이언트로부터 전달받은 데이터를 저장하는 클래스입니다
+
+### StudentInfoResponseDto
 
 ```java
 @Builder
@@ -1259,7 +1084,7 @@ public class StudentInfoResponseDto {
 
 `service` 패키지에 실제로 일을 하는 클래스를 만들어줍니다
 
-$\color{#9A6A3A}\textsf{CourseService.java}$
+### CourseService
 
 ```java
 @Service
@@ -1295,31 +1120,40 @@ public class CourseService {
 }
 ```
 
-`@Service`는 이 클래스가 실제 로직을 처리하는 Service라는걸 Spring에게 알려주고, Bean으로 등록해줍니다
+`CourseService`는 Controller에서 받은 요청을 바탕으로 강의 관련 기능을 처리해줍니다. 데이터 작업이 필요할시엔 `CourseRepository`에 요청합니다.
 
-`@RequiredArgsConstructor`는 지난번에 봤을텐데요. `final`이 붙은 필드를 매개변수로 받는 생성자를 만들어주는 Lombok 어노테이션입니다
+#### 1. `@RequiredArgsConstructor`
+
+`final`이 붙은 필드를 매개변수로 받아주는 생성자를 만들어주는 Lombok 어노테이션입니다.
 
 그래서 `courseRepository`를 직접 `new`로 만들지 않아도 Spring이 생성자를 통해 알아서 넣어줍니다
 
-$\color{#9A6A3A}\textsf{saveCourse()}$
+#### 2. `saveCourse()`
 
-요청으로 받은 DTO에서 값을 꺼내 `Course.builder()`로 엔티티를 만들고, `save()`로 DB에 저장합니다
+1. Course.builder()로 Course 객체를 만들 준비를 시작합니다
+2. courseName에 courseSaveRequestDto.getCourseName()으로 꺼낸 강의 이름을 넣습니다
+3. professor에 courseSaveRequestDto.getProfessor()로 꺼낸 교수 이름을 넣습니다
+4. build()로 Course 객체를 완성합니다
 
-`save()`를 부르는 순간 `course` 테이블에 행이 하나 늘어나기 때문에, `course`에는 DB가 매겨준 `id`가 바로 채워집니다
 
-저장한 엔티티는 그대로 내보내지 않고, `from()`으로 응답용 DTO로 바꿔서 돌려주는걸 볼 수 있습니다
 
-$\color{#9A6A3A}\textsf{deleteCourse()}$
+#### 3. `deleteCourse()`
 
-`deleteById()`로 해당 `id`의 강의를 지웁니다
+1. courseRepository.deleteById()에 courseId를 넣어 해당 강의를 지웁니다
+2. 앞에서 본 `cascade = CascadeType.ALL` 때문에 이 강의에 들어있던 학생들도 같이 지워집니다
 
-앞에서 본 `cascade = CascadeType.ALL` 때문에 이 강의에 들어있던 학생들도 같이 지워집니다
 
-$\color{#9A6A3A}\textsf{getAllCourse()}$
 
-`findAll()`로 모든 강의를 꺼내온 다음, `stream()`으로 하나씩 흘려보내면서 `map()`으로 DTO로 바꾸고 `toList()`로 다시 리스트로 모아줍니다
+#### 4. `getAllCourse()`
 
-$\color{#9A6A3A}\textsf{StudentService.java}$
+1. findAll()로 DB에 있는 모든 Course 엔티티를 List로 가져옵니다
+2. stream()으로 바꿔서 하나씩 처리할 수 있게 합니다
+3. map()으로 각 Course를 CourseInfoResponseDto.from()에 넣어 DTO로 바꿉니다
+4. toList()로 다시 List로 모읍니다
+
+
+
+### StudentService
 
 ```java
 @Service
@@ -1383,43 +1217,51 @@ public class StudentService {
 }
 ```
 
-`StudentService`는 학생을 저장할 때 강의도 찾아야 하니까 `CourseRepository`까지 같이 받아옵니다
+`StudentService`는 Controller에서 받은 요청을 바탕으로 학생 관련 기능을 처리해줍니다. 데이터 작업이 필요할시엔 `StudentRepository`에 요청합니다.
 
-$\color{#9A6A3A}\textsf{saveStudent()}$
+#### 1. `saveStudent()`
 
-요청에 담겨온 `courseId`로 강의를 먼저 찾고, 없으면 `orElseThrow()`로 `존재하지 않는 강의입니다.` 예외를 던집니다
+1. courseRepository.findById()에 studentSaveRequestDto.getCourseId()로 꺼낸 강의 id를 넣어 강의를 찾습니다
+2. 강의가 없을 수도 있어서 결과가 Optional에 감싸져 오고, orElseThrow()로 있으면 꺼내고 없으면 `존재하지 않는 강의입니다.` 예외를 던집니다
+3. Student.builder()로 Student 객체를 만들 준비를 시작합니다
+4. name에 studentSaveRequestDto.getName()으로 꺼낸 학생 이름을 넣습니다
+5. major에 studentSaveRequestDto.getMajor()로 꺼낸 전공을 넣습니다
+6. course에 1번에서 찾은 강의 객체를 통째로 넣습니다
+7. build()로 Student 객체를 완성합니다
 
-`findById()`로 값을 찾아서 넘겨주는데, 없을 수도 있어서 `Optional`에 감싸서 넘겨줍니다
 
-`orElseThrow()`는 값이 있으면 꺼내주고, 없으면 괄호 안의 예외를 던지는 메서드입니다
 
-강의를 찾았으면 학생을 만들 때 `.course(course)`로 강의 객체를 통째로 넣어줍니다
+#### 2. `getStudent()`
 
-그런데 테이블에는 객체를 통째로 넣을 수 없으니, JPA가 그 강의의 `id`만 꺼내서 `course_id` 열에 넣어줍니다
+1. studentRepository.findById()에 studentId를 넣어 학생을 찾고, 없으면 `요청하신 학생 정보를 찾을 수 없습니다.` 예외를 던집니다
+2. StudentInfoResponseDto.from()으로 찾은 학생을 응답용 DTO로 바꿔 돌려줍니다
 
-즉, 자바에서는 객체를 넣고, DB에는 그 객체의 id가 저장된다고 보시면 됩니다
 
-$\color{#9A6A3A}\textsf{getStudent()}$
 
-`id`로 학생 한명을 찾아서 DTO로 바꿔 돌려줍니다
+#### 3. `updateStudent()`
 
-$\color{#9A6A3A}\textsf{updateStudent()}$
-
-여기서 `updateStudent`를 보시면 `student.update(...)`만 해주고 `save`를 하지 않았습니다
+1. `studentRepository.findById()`에 `studentId`를 넣어 수정할 학생을 찾고, 없으면 `요청하신 학생 정보를 찾을 수 없습니다.` 예외를 던집니다
+2. `courseRepository.findById()`에 `studentSaveRequestDto.getCourseId()`로 꺼낸 강의 id를 넣어 바꿀 강의를 찾고, 없으면 `존재하지 않는 강의입니다.` 예외를 던집니다
+3. `student.update()`에 `studentSaveRequestDto`에서 꺼낸 이름, 전공과 2번에서 찾은 강의 객체를 넣어 학생 정보를 바꿉니다
+4. `StudentInfoResponseDto.from()`으로 바뀐 학생을 응답용 DTO로 바꿔 돌려줍니다
 
 `@Transactional` 안에서 조회한 엔티티는 JPA가 지켜보고 있다가, 값이 바뀌면 트랜잭션이 끝날 때 알아서 `UPDATE` 쿼리를 날려줍니다
 
 이걸 변경 감지(Dirty Checking)라고 합니다
 
-$\color{#9A6A3A}\textsf{deleteStudent()}$
+#### 4. `deleteStudent()`
 
-`deleteById()`로 학생 한명만 지웁니다
+1. studentRepository.deleteById()에 studentId를 넣어 학생 한명만 지웁니다
+2. 학생은 자식 쪽이라 학생을 지워도 강의는 그대로 남아있습니다
 
-학생은 자식 쪽이라 학생을 지워도 강의는 그대로 남아있습니다
 
-$\color{#9A6A3A}\textsf{getAllStudent()}$
 
-`getAllCourse`와 같은 방식으로, 모든 학생을 꺼내와서 DTO 리스트로 바꿔 돌려줍니다
+#### 5. `getAllStudent()`
+
+1. findAll()로 DB에 있는 모든 Student 엔티티를 List로 가져옵니다
+2. stream()으로 바꿔서 하나씩 처리할 수 있게 합니다
+3. map()으로 각 Student를 StudentInfoResponseDto.from()에 넣어 DTO로 바꿉니다
+4. toList()로 다시 List로 모읍니다
 
 `@Transactional`은 중간에 오류가 나면 지금까지 한 작업을 전부 되돌려주고, `readOnly = true`는 조회만 할 때 붙여서 성능을 조금 아껴줍니다
 
@@ -1427,7 +1269,7 @@ $\color{#9A6A3A}\textsf{getAllStudent()}$
 
 `controller` 패키지에 요청을 받아주는 클래스를 만들어줍니다
 
-$\color{#9A6A3A}\textsf{CourseController.java}$
+### CourseController
 
 ```java
 @RestController
@@ -1455,37 +1297,48 @@ public class CourseController {
 }
 ```
 
-`@RestController`는 이 클래스가 요청을 받아서 JSON으로 응답해주는 Controller라는걸 Spring에게 알려줍니다
+`CourseController`는 클라이언트가 보낸 강의 관련 요청을 받아 응답해줍니다. 실제 기능 처리가 필요할시엔 `CourseService`에 요청합니다.
 
-`@RequestMapping("/courses")`를 클래스 위에 붙여두면, 안에 있는 메서드들의 주소는 전부 `/courses`로 시작하게 됩니다
+#### 1. `@RestController`
 
-`@RequiredArgsConstructor`는 Service때와 마찬가지로 `courseService`를 생성자로 넣어받기 위해 붙여줍니다
+이 클래스가 요청을 받아서 JSON으로 응답해주는 Controller라는걸 Spring에게 알려줍니다
 
-`ResponseEntity`는 응답 데이터와 함께 상태 코드까지 직접 정해서 보낼 수 있게 해주는 클래스입니다
+#### 2. `@RequestMapping("/courses")`
 
-$\color{#9A6A3A}\textsf{saveCourse()}$
+안에 있는 메서드들의 주소는 전부 `/courses`로 시작하게 됩니다
 
-`POST /courses`로 요청이 오면 실행됩니다
+#### 3. `ResponseEntity`
 
-`@RequestBody`가 요청에 담겨온 JSON을 `CourseSaveRequestDto`로 바꿔주고, 이걸 그대로 `courseService.saveCourse()`에 넘겨줍니다
+응답 데이터와 함께 상태 코드까지 직접 정해서 보낼 수 있게 해주는 클래스입니다
 
-응답에는 DB가 매겨준 `id`까지 같이 담겨서 돌아옵니다
+#### 4. `saveCourse()`
 
-새로 만들어졌다는 뜻으로 `201 CREATED` 상태 코드를 같이 보내줍니다
+1. `POST /courses`로 요청이 오면 실행됩니다
+2. @RequestBody가 요청에 담겨온 JSON을 CourseSaveRequestDto로 바꿔줍니다
+3. courseService.saveCourse()에 courseSaveRequestDto를 그대로 넘겨 강의를 저장합니다
+4. ResponseEntity.status(HttpStatus.CREATED)로 새로 만들어졌다는 뜻의 `201 CREATED` 상태 코드를 정합니다
+5. body()에 Service가 돌려준 DTO를 넣어 응답합니다. 이 DTO에는 DB가 매겨준 `id`까지 담겨있습니다
 
-$\color{#9A6A3A}\textsf{deleteCourse()}$
 
-`DELETE /courses/1`처럼 주소 끝에 지울 강의의 `id`를 붙여서 요청합니다
 
-`@PathVariable`이 주소의 `{courseId}` 자리에 있는 `1`을 꺼내서 `courseId`에 넣어줍니다
+#### 5. `deleteCourse()`
 
-지우고 나면 돌려줄 데이터가 없으니 `ResponseEntity<Void>`로 두고, `204 NO_CONTENT`와 함께 빈 응답을 보냅니다
+1. `DELETE /courses/1`처럼 주소 끝에 지울 강의의 `id`를 붙여서 요청하면 실행됩니다
+2. @PathVariable이 주소의 `{courseId}` 자리에 있는 `1`을 꺼내서 courseId에 넣어줍니다
+3. courseService.deleteCourse()에 courseId를 넘겨 강의를 지웁니다
+4. 지우고 나면 돌려줄 데이터가 없으니 반환 타입을 ResponseEntity로 두고, `204 NO_CONTENT`와 함께 build()로 빈 응답을 보냅니다
 
-$\color{#9A6A3A}\textsf{getAllCourse()}$
 
-`GET /courses`로 요청이 오면 모든 강의 목록을 `200 OK`와 함께 돌려줍니다
 
-$\color{#9A6A3A}\textsf{StudentController.java}$
+#### 6. `getAllCourse()`
+
+1. `GET /courses`로 요청이 오면 실행됩니다
+2. courseService.getAllCourse()로 모든 강의를 DTO 리스트로 받아옵니다
+3. `200 OK` 상태 코드와 함께 body()에 리스트를 넣어 응답합니다
+
+
+
+### StudentController
 
 ```java
 @RestController
@@ -1526,6 +1379,50 @@ public class StudentController {
 
 `StudentController`도 구조는 똑같고, 주소만 `/students`로 시작합니다
 
+#### 1. `saveStudent()`
+
+1. `POST /students`로 요청이 오면 실행됩니다
+2. @RequestBody가 요청에 담겨온 JSON을 StudentSaveRequestDto로 바꿔줍니다
+3. studentService.saveStudent()에 studentSaveRequestDto를 그대로 넘겨 학생을 저장합니다
+4. `201 CREATED` 상태 코드와 함께 body()에 Service가 돌려준 DTO를 넣어 응답합니다
+
+
+
+#### 2. `getStudent()`
+
+1. `GET /students/1`처럼 주소 끝에 조회할 학생의 `id`를 붙여서 요청하면 실행됩니다
+2. @PathVariable이 주소의 `{studentId}` 자리에 있는 `1`을 꺼내서 studentId에 넣어줍니다
+3. studentService.getStudent()에 studentId를 넘겨 학생 한명을 DTO로 받아옵니다
+4. `200 OK` 상태 코드와 함께 body()에 DTO를 넣어 응답합니다
+
+
+
+#### 3. `updateStudent()`
+
+1. `PATCH /students/1`처럼 주소 끝에 수정할 학생의 `id`를 붙이고, 바꿀 내용을 JSON에 담아 요청하면 실행됩니다
+2. @PathVariable이 주소에서 `1`을 꺼내 studentId에 넣고, @RequestBody가 JSON을 StudentSaveRequestDto로 바꿔줍니다
+3. studentService.updateStudent()에 studentId와 studentSaveRequestDto를 같이 넘겨 학생 정보를 바꿉니다
+4. `200 OK` 상태 코드와 함께 body()에 바뀐 학생의 DTO를 넣어 응답합니다
+
+
+
+#### 4. `deleteStudent()`
+
+1. `DELETE /students/1`처럼 주소 끝에 지울 학생의 `id`를 붙여서 요청하면 실행됩니다
+2. @PathVariable이 주소의 `{studentId}` 자리에 있는 `1`을 꺼내서 studentId에 넣어줍니다
+3. studentService.deleteStudent()에 studentId를 넘겨 학생을 지웁니다
+4. 돌려줄 데이터가 없으니 반환 타입을 `ResponseEntity<Void>`로 두고, `204 NO_CONTENT`와 함께 build()로 빈 응답을 보냅니다
+
+
+
+#### 5. `getAllStudent()`
+
+1. `GET /students`로 요청이 오면 실행됩니다
+2. studentService.getAllStudent()로 모든 학생을 DTO 리스트로 받아옵니다
+3. `200 OK` 상태 코드와 함께 body()에 리스트를 넣어 응답합니다
+
+
+
 ## 포스트맨으로 테스트하기
 
 저번이랑 동일하게 `+` 누르고 `Collection` 누르기
@@ -1550,9 +1447,7 @@ public class StudentController {
 
 ![강의 조회 요청](media/4st-media/포스트맨-강의조회요청.png)
 
-![강의 조회 결과](media/4st-media/포스트맨-강의조회결과.png)
-
-`courseId` 는 `@GeneratedValue(strategy = GenerationType.IDENTITY)`로 자동 생성된 id의 값을 넣어주면 되겠죠?
+![강의 조회 결과](media/4st-media/포스트맨-강의조회결과.png) `courseId` 는 `@GeneratedValue(strategy = GenerationType.IDENTITY)`로 자동 생성된 id의 값을 넣어주면 되겠죠?
 
 ![학생 등록 요청](media/4st-media/포스트맨-학생등록요청.png)
 
