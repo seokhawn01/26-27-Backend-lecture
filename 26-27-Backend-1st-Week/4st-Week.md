@@ -1130,26 +1130,26 @@ public class CourseService {
 
 #### 2. `saveCourse()`
 
-1. Course.builder()로 Course 객체를 만들 준비를 시작합니다
-2. courseName에 courseSaveRequestDto.getCourseName()으로 꺼낸 강의 이름을 넣습니다
-3. professor에 courseSaveRequestDto.getProfessor()로 꺼낸 교수 이름을 넣습니다
-4. build()로 Course 객체를 완성합니다
+1. `Course.builder()`로 `Course` 객체를 만들 준비를 시작합니다
+2. `courseName`에 `courseSaveRequestDto.getCourseName()`으로 꺼낸 강의 이름을 넣습니다
+3. `professor`에 `courseSaveRequestDto.getProfessor()`로 꺼낸 교수 이름을 넣습니다
+4. `build()`로 `Course` 객체를 완성합니다
 
 
 
 #### 3. `deleteCourse()`
 
-1. courseRepository.deleteById()에 courseId를 넣어 해당 강의를 지웁니다
+1. `courseRepository.deleteById()`에 `courseId`를 넣어 해당 강의를 지웁니다
 2. 앞에서 본 `cascade = CascadeType.ALL` 때문에 이 강의에 들어있던 학생들도 같이 지워집니다
 
 
 
 #### 4. `getAllCourse()`
 
-1. findAll()로 DB에 있는 모든 Course 엔티티를 List로 가져옵니다
-2. stream()으로 바꿔서 하나씩 처리할 수 있게 합니다
-3. map()으로 각 Course를 CourseInfoResponseDto.from()에 넣어 DTO로 바꿉니다
-4. toList()로 다시 List로 모읍니다
+1. `findAll()`로 DB에 있는 모든 `Course` 엔티티를 List로 가져옵니다
+2. `stream()`으로 바꿔서 하나씩 처리할 수 있게 합니다
+3. `map()`으로 각 `Course`를 `CourseInfoResponseDto.from()`에 넣어 DTO로 바꿉니다
+4. `toList()`로 다시 List로 모읍니다
 
 
 
@@ -1221,20 +1221,20 @@ public class StudentService {
 
 #### 1. `saveStudent()`
 
-1. courseRepository.findById()에 studentSaveRequestDto.getCourseId()로 꺼낸 강의 id를 넣어 강의를 찾습니다
-2. 강의가 없을 수도 있어서 결과가 Optional에 감싸져 오고, orElseThrow()로 있으면 꺼내고 없으면 `존재하지 않는 강의입니다.` 예외를 던집니다
-3. Student.builder()로 Student 객체를 만들 준비를 시작합니다
-4. name에 studentSaveRequestDto.getName()으로 꺼낸 학생 이름을 넣습니다
-5. major에 studentSaveRequestDto.getMajor()로 꺼낸 전공을 넣습니다
-6. course에 1번에서 찾은 강의 객체를 통째로 넣습니다
-7. build()로 Student 객체를 완성합니다
+1. `courseRepository.findById()`에 `studentSaveRequestDto.getCourseId()`로 꺼낸 강의 `id`를 넣어 강의를 찾습니다
+2. 강의가 없을 수도 있어서 결과가 `Optional`에 감싸져 오고, `orElseThrow()`로 있으면 꺼내고 없으면 `존재하지 않는 강의입니다.` 예외를 던집니다
+3. `Student.builder()`로 `Student` 객체를 만들 준비를 시작합니다
+4. `name`에 `studentSaveRequestDto.getName()`으로 꺼낸 학생 이름을 넣습니다
+5. `major`에 `studentSaveRequestDto.getMajor()`로 꺼낸 전공을 넣습니다
+6. `course`에 1번에서 찾은 강의 객체를 통째로 넣습니다
+7. `build()`로 `Student 객체를 완성합니다
 
 
 
 #### 2. `getStudent()`
 
-1. studentRepository.findById()에 studentId를 넣어 학생을 찾고, 없으면 `요청하신 학생 정보를 찾을 수 없습니다.` 예외를 던집니다
-2. StudentInfoResponseDto.from()으로 찾은 학생을 응답용 DTO로 바꿔 돌려줍니다
+1. `studentRepository.findById()`에 `studentId`를 넣어 학생을 찾고, 없으면 `요청하신 학생 정보를 찾을 수 없습니다.` 예외를 던집니다
+2. `StudentInfoResponseDto.from()`으로 찾은 학생을 응답용 DTO로 바꿔 돌려줍니다
 
 
 
@@ -1251,17 +1251,17 @@ public class StudentService {
 
 #### 4. `deleteStudent()`
 
-1. studentRepository.deleteById()에 studentId를 넣어 학생 한명만 지웁니다
+1. `studentRepository.deleteById()`에 `studentId`를 넣어 학생 한명만 지웁니다
 2. 학생은 자식 쪽이라 학생을 지워도 강의는 그대로 남아있습니다
 
 
 
 #### 5. `getAllStudent()`
 
-1. findAll()로 DB에 있는 모든 Student 엔티티를 List로 가져옵니다
-2. stream()으로 바꿔서 하나씩 처리할 수 있게 합니다
-3. map()으로 각 Student를 StudentInfoResponseDto.from()에 넣어 DTO로 바꿉니다
-4. toList()로 다시 List로 모읍니다
+1. `findAll()`로 DB에 있는 모든 `Student` 엔티티를 List로 가져옵니다
+2. `stream()`으로 바꿔서 하나씩 처리할 수 있게 합니다
+3. `map()`으로 각 `Student`를 `StudentInfoResponseDto.from()`에 넣어 DTO로 바꿉니다
+4. `toList()`로 다시 List로 모읍니다
 
 `@Transactional`은 중간에 오류가 나면 지금까지 한 작업을 전부 되돌려주고, `readOnly = true`는 조회만 할 때 붙여서 성능을 조금 아껴줍니다
 
@@ -1314,27 +1314,27 @@ public class CourseController {
 #### 4. `saveCourse()`
 
 1. `POST /courses`로 요청이 오면 실행됩니다
-2. @RequestBody가 요청에 담겨온 JSON을 CourseSaveRequestDto로 바꿔줍니다
-3. courseService.saveCourse()에 courseSaveRequestDto를 그대로 넘겨 강의를 저장합니다
-4. ResponseEntity.status(HttpStatus.CREATED)로 새로 만들어졌다는 뜻의 `201 CREATED` 상태 코드를 정합니다
-5. body()에 Service가 돌려준 DTO를 넣어 응답합니다. 이 DTO에는 DB가 매겨준 `id`까지 담겨있습니다
+2. `@RequestBody`가 요청에 담겨온 JSON을 `CourseSaveRequestDto`로 바꿔줍니다
+3. `courseService.saveCourse()`에 `courseSaveRequestDto`를 그대로 넘겨 강의를 저장합니다
+4. `ResponseEntity.status(HttpStatus.CREATED)`로 새로 만들어졌다는 뜻의 `201 CREATED` 상태 코드를 정합니다
+5. `body()`에 Service가 돌려준 DTO를 넣어 응답합니다. 이 DTO에는 DB가 매겨준 `id`까지 담겨있습니다
 
 
 
 #### 5. `deleteCourse()`
 
 1. `DELETE /courses/1`처럼 주소 끝에 지울 강의의 `id`를 붙여서 요청하면 실행됩니다
-2. @PathVariable이 주소의 `{courseId}` 자리에 있는 `1`을 꺼내서 courseId에 넣어줍니다
-3. courseService.deleteCourse()에 courseId를 넘겨 강의를 지웁니다
-4. 지우고 나면 돌려줄 데이터가 없으니 반환 타입을 ResponseEntity로 두고, `204 NO_CONTENT`와 함께 build()로 빈 응답을 보냅니다
+2. `@PathVariable`이 주소의 `{courseId}` 자리에 있는 `1`을 꺼내서 `courseId`에 넣어줍니다
+3. `courseService.deleteCourse()`에 `courseId`를 넘겨 강의를 지웁니다
+4. 지우고 나면 돌려줄 데이터가 없으니 반환 타입을 `ResponseEntity`로 두고, `204 NO_CONTENT`와 함께 `build()`로 빈 응답을 보냅니다
 
 
 
 #### 6. `getAllCourse()`
 
 1. `GET /courses`로 요청이 오면 실행됩니다
-2. courseService.getAllCourse()로 모든 강의를 DTO 리스트로 받아옵니다
-3. `200 OK` 상태 코드와 함께 body()에 리스트를 넣어 응답합니다
+2. `courseService.getAllCourse()`로 모든 강의를 DTO 리스트로 받아옵니다
+3. `200 OK` 상태 코드와 함께 `body()`에 리스트를 넣어 응답합니다
 
 
 
@@ -1382,44 +1382,44 @@ public class StudentController {
 #### 1. `saveStudent()`
 
 1. `POST /students`로 요청이 오면 실행됩니다
-2. @RequestBody가 요청에 담겨온 JSON을 StudentSaveRequestDto로 바꿔줍니다
-3. studentService.saveStudent()에 studentSaveRequestDto를 그대로 넘겨 학생을 저장합니다
-4. `201 CREATED` 상태 코드와 함께 body()에 Service가 돌려준 DTO를 넣어 응답합니다
+2. `@RequestBody`가 요청에 담겨온 JSON을 `StudentSaveRequestDto`로 바꿔줍니다
+3. `studentService.saveStudent()`에 `studentSaveRequestDto`를 그대로 넘겨 학생을 저장합니다
+4. `201 CREATED` 상태 코드와 함께 `body()`에 Service가 돌려준 DTO를 넣어 응답합니다
 
 
 
 #### 2. `getStudent()`
 
 1. `GET /students/1`처럼 주소 끝에 조회할 학생의 `id`를 붙여서 요청하면 실행됩니다
-2. @PathVariable이 주소의 `{studentId}` 자리에 있는 `1`을 꺼내서 studentId에 넣어줍니다
-3. studentService.getStudent()에 studentId를 넘겨 학생 한명을 DTO로 받아옵니다
-4. `200 OK` 상태 코드와 함께 body()에 DTO를 넣어 응답합니다
+2. `@PathVariable`이 주소의 `{studentId}` 자리에 있는 `1`을 꺼내서 `studentId`에 넣어줍니다
+3. `studentService.getStudent()`에 `studentId`를 넘겨 학생 한명을 DTO로 받아옵니다
+4. `200 OK` 상태 코드와 함께 `body()`에 DTO를 넣어 응답합니다
 
 
 
 #### 3. `updateStudent()`
 
 1. `PATCH /students/1`처럼 주소 끝에 수정할 학생의 `id`를 붙이고, 바꿀 내용을 JSON에 담아 요청하면 실행됩니다
-2. @PathVariable이 주소에서 `1`을 꺼내 studentId에 넣고, @RequestBody가 JSON을 StudentSaveRequestDto로 바꿔줍니다
-3. studentService.updateStudent()에 studentId와 studentSaveRequestDto를 같이 넘겨 학생 정보를 바꿉니다
-4. `200 OK` 상태 코드와 함께 body()에 바뀐 학생의 DTO를 넣어 응답합니다
+2. `@PathVariable`이 주소에서 `1`을 꺼내 `studentId`에 넣고, `@RequestBody`가 JSON을 `StudentSaveRequestDto`로 바꿔줍니다
+3. `studentService.updateStudent()`에 `studentId`와 `studentSaveRequestDto`를 같이 넘겨 학생 정보를 바꿉니다
+4. `200 OK` 상태 코드와 함께 `body()`에 바뀐 학생의 DTO를 넣어 응답합니다
 
 
 
 #### 4. `deleteStudent()`
 
 1. `DELETE /students/1`처럼 주소 끝에 지울 학생의 `id`를 붙여서 요청하면 실행됩니다
-2. @PathVariable이 주소의 `{studentId}` 자리에 있는 `1`을 꺼내서 studentId에 넣어줍니다
-3. studentService.deleteStudent()에 studentId를 넘겨 학생을 지웁니다
-4. 돌려줄 데이터가 없으니 반환 타입을 `ResponseEntity<Void>`로 두고, `204 NO_CONTENT`와 함께 build()로 빈 응답을 보냅니다
+2. `@PathVariable`이 주소의 `{studentId}` 자리에 있는 `1`을 꺼내서 `studentId`에 넣어줍니다
+3. `studentService.deleteStudent()`에 `studentId`를 넘겨 학생을 지웁니다
+4. 돌려줄 데이터가 없으니 반환 타입을 `ResponseEntity<Void>`로 두고, `204 NO_CONTENT`와 함께 `build()`로 빈 응답을 보냅니다
 
 
 
 #### 5. `getAllStudent()`
 
 1. `GET /students`로 요청이 오면 실행됩니다
-2. studentService.getAllStudent()로 모든 학생을 DTO 리스트로 받아옵니다
-3. `200 OK` 상태 코드와 함께 body()에 리스트를 넣어 응답합니다
+2. `studentService.getAllStudent()`로 모든 학생을 DTO 리스트로 받아옵니다
+3. `200 OK` 상태 코드와 함께 `body()`에 리스트를 넣어 응답합니다
 
 
 
