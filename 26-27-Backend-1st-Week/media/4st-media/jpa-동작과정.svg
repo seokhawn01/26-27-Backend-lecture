@@ -17,12 +17,15 @@
   <marker id="ao" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="6.5" markerHeight="6.5" orient="auto">
     <path d="M 0 0 L 12 6 L 0 12 z" fill="#d97706"/>
   </marker>
+  <marker id="ab" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+    <path d="M 0 0 L 12 6 L 0 12 z" fill="#111"/>
+  </marker>
 </defs>
 <rect width="1600" height="1600" fill="#ffffff"/>
 <g class="lbl" transform="translate(0,392)">
 
   <text class="ttl" x="240"  y="125">애플리케이션</text>
-  <text class="ttl" x="800"  y="125">JPA</text>
+  <text class="ttl" x="800"  y="125">Spring Data JPA + JPA</text>
   <text class="ttl" x="1360" y="125">데이터베이스</text>
 
   <rect class="bx" x="40" y="160" width="400" height="560" rx="18"/>
@@ -41,17 +44,24 @@
   <text class="cel" x="313" y="463">24</text>
   <text class="sub" x="240" y="555">자바 객체</text>
 
-  <rect x="640" y="160" width="320" height="560" rx="18" fill="#eaf1fb"/>
-  <path d="M 640 250 L 640 178 Q 640 160 658 160 L 942 160 Q 960 160 960 178 L 960 250 Z" fill="#fdefd9"/>
-  <rect class="bx" x="640" y="160" width="320" height="560" rx="18"/>
-  <line class="bx" x1="640" y1="250" x2="960" y2="250"/>
-  <text class="cel" x="800" y="203">Repository</text>
-  <text class="sub" x="800" y="235">save() · findById()</text>
-  <text class="in" x="800" y="350">객체를 보고</text>
-  <text class="in" x="800" y="395">SQL을 만들고</text>
-  <line class="thin" x1="690" y1="440" x2="910" y2="440"/>
-  <text class="in" x="800" y="505">결과를 받아서</text>
-  <text class="in" x="800" y="550">객체에 담습니다</text>
+  <rect x="640" y="160" width="320" height="220" rx="18" fill="#fdefd9"/>
+  <rect class="bx" x="640" y="160" width="320" height="220" rx="18"/>
+  <text class="cel" x="800" y="210">Spring Data JPA</text>
+  <line class="thin" x1="690" y1="240" x2="910" y2="240"/>
+  <text class="in"  x="800" y="295">Repository</text>
+  <text class="sub" x="800" y="335">save() · findById()</text>
+
+  <path class="ln" marker-start="url(#ab)" marker-end="url(#ab)" d="M 800 388 L 800 432"/>
+
+  <rect x="640" y="440" width="320" height="280" rx="18" fill="#eaf1fb"/>
+  <rect class="bx" x="640" y="440" width="320" height="280" rx="18"/>
+  <text class="cel" x="800" y="485">JPA (Hibernate)</text>
+  <line class="thin" x1="690" y1="510" x2="910" y2="510"/>
+  <text class="in"  x="800" y="555">객체를 보고</text>
+  <text class="in"  x="800" y="590">SQL을 만들고</text>
+  <line class="thin" x1="690" y1="615" x2="910" y2="615"/>
+  <text class="in"  x="800" y="655">결과를 받아서</text>
+  <text class="in"  x="800" y="690">객체에 담습니다</text>
 
   <rect class="bx" x="1160" y="160" width="400" height="560" rx="18"/>
 
@@ -73,21 +83,21 @@
   <text class="cel" x="1442" y="523">23</text>
   <text class="sub" x="1360" y="605">member 테이블</text>
 
-  <path class="ar" marker-end="url(#ao)" d="M 460 340 L 618 340"/>
-  <path class="ar" marker-end="url(#ao)" d="M 980 340 L 1138 340"/>
-  <path class="ar" marker-end="url(#ao)" d="M 1140 555 L 982 555"/>
-  <path class="ar" marker-end="url(#ao)" d="M 620 555 L 462 555"/>
+  <path class="ar" marker-end="url(#ao)" d="M 460 250 L 618 250"/>
+  <path class="ar" marker-end="url(#ao)" d="M 620 340 L 462 340"/>
+  <path class="ar" marker-end="url(#ao)" d="M 980 572 L 1138 572"/>
+  <path class="ar" marker-end="url(#ao)" d="M 1140 672 L 982 672"/>
 
-  <text class="st"  x="540"  y="252">① 객체를</text>
-  <text class="st"  x="540"  y="292">넘기면</text>
-  <text class="st"  x="1060" y="252">② SQL을</text>
-  <text class="st"  x="1060" y="292">만들어서</text>
-  <text class="sub" x="1060" y="392">JDBC로 전달</text>
-  <text class="sub" x="540"  y="392">Repository로 전달</text>
-  <text class="st"  x="1060" y="620">③ 결과를</text>
-  <text class="st"  x="1060" y="660">돌려주면</text>
-  <text class="st"  x="540"  y="620">④ 객체에</text>
-  <text class="st"  x="540"  y="660">담아서 반환</text>
+  <text class="st"  x="540"  y="175">① 객체를</text>
+  <text class="st"  x="540"  y="210">넘기면</text>
+  <text class="sub" x="540"  y="302">Repository로 전달</text>
+  <text class="st"  x="540"  y="390">④ 객체에</text>
+  <text class="st"  x="540"  y="425">담아서 반환</text>
+  <text class="st"  x="1060" y="495">② SQL을</text>
+  <text class="st"  x="1060" y="530">만들어서</text>
+  <text class="sub" x="1060" y="630">JDBC로 전달</text>
+  <text class="st"  x="1060" y="722">③ 결과를</text>
+  <text class="st"  x="1060" y="757">돌려주면</text>
 
 </g>
 </svg>

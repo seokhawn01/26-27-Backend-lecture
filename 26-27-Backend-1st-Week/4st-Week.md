@@ -3,12 +3,12 @@
 ## 목차
 
 - [1. 데이터베이스와 DBMS](#데이터베이스와-dbms)
-  - [1.1 데이터베이스의 정의](#데이터베이스는-데이터-그-자체입니다)
+  - [1.1 데이터베이스는 데이터 그 자체입니다](#데이터베이스는-데이터-그-자체입니다)
   - [1.2 데이터베이스를 관리하는 DBMS](#데이터베이스를-관리하는-dbms)
 - [2. DBMS의 종류](#dbms의-종류)
   - [2.1 표로 저장하는 RDBMS](#표로-저장하는-rdbms)
-  - [2.2 NoSQL](#nosql)
-  - [2.3 MySQL과 PostgreSQL](#mysql과-postgresql)
+  - [2.2 MySQL과 PostgreSQL](#mysql과-postgresql)
+  - [2.3 NoSQL](#nosql)
 - [3. 테이블의 구성](#테이블의-구성)
   - [3.1 행(Row) / 레코드(Record)](#행row--레코드record)
   - [3.2 열(Column) / 속성(Attribute)](#열column--속성attribute)
@@ -27,20 +27,15 @@
   - [7.3 ORDER BY](#order-by)
   - [7.4 작성 순서와 실행 순서](#작성-순서와-실행-순서)
 - [8. JOIN](#join)
-  - [8.1 테이블을 나누는 이유](#테이블을-나누는-이유)
+  - [8.1 JOIN의 필요성](#join의-필요성)
   - [8.2 INNER JOIN](#inner-join)
-  - [8.3 나머지 조인은 과제입니다](#나머지-조인은-과제입니다)
-- [9. 전체 정리](#전체-정리)
-  - [9.1 명령어 한눈에 보기](#명령어-한눈에-보기)
+- [9. ORM](#orm)
 - [10. JPA](#jpa)
-  - [10.1 JPA는 무엇인가요](#jpa는-무엇인가요)
-  - [10.2 SQL을 직접 쓰면 생기는 일](#sql을-직접-쓰면-생기는-일)
-  - [10.3 그래서 나온게 ORM입니다](#그래서-나온게-orm입니다)
-  - [10.4 JPA와 ORM의 관계](#jpa와-orm의-관계)
-  - [10.5 JPA의 동작 과정](#jpa의-동작-과정)
-  - [10.6 Hibernate가 매핑하는 방법](#hibernate가-매핑하는-방법)
-  - [10.7 JPA의 장점](#jpa의-장점)
-  - [10.8 트랜잭션이란?](#트랜잭션이란)
+  - [10.1 JPA가 없을때](#jpa가-없을때)
+  - [10.2 JPA, Hibernate, Spring Data JPA](#jpa-hibernate-spring-data-jpa)
+  - [10.3 JPA 동작 과정](#jpa-동작-과정)
+  - [10.4 JPA의 장점](#jpa의-장점)
+  - [10.5 트랜잭션이란?](#트랜잭션이란)
 - [11. JPA 활용해보기](#jpa-활용해보기)
   - [11.1 @Entity](#entity)
   - [11.2 @Table](#table)
@@ -67,8 +62,6 @@
 
 ---
 
-
-
 # 데이터베이스와 DBMS
 
 데이터베이스에 대한 정의부터 알아보겠습니다
@@ -89,37 +82,32 @@
 
 ---
 
-
-
 # DBMS의 종류
 
-이런 DBMS의 종류는 RDBMS, NoSQL이 있습니다
+이런 DBMS의 종류는 RDBMS, NoSQL
 
 ## 표로 저장하는 RDBMS
 
-RDBMS는 데이터를 행과 열로 이루어진 테이블로 저장합니다
+RDBMS는 데이터를 행과 열로 이루어진 2차원 테이블 형태로 저장합니다
 
 ![member 테이블 구조](media/4st-media/테이블-구조.png)
 
-## NoSQL
-
-NoSQL은 이름 그대로 테이블 형태를 고집하지 않는 DBMS입니다
-
-열을 미리 정해두지 않아도 되니까 자유롭지만, 대신 데이터 구조가 제각각이어도 아무도 막아주지 않습니다
-
 ## MySQL과 PostgreSQL
 
-이런 형태를 우리가 가장 흔히 보는 MySQL,PostgreSQL에서 볼 수 있습니다
+두 시스템 모두 대표적인 관계형 데이터베이스(RDBMS)입니다
 
-PostgreSQL은 JSON 데이터를 NoSQL처럼 유연하게 다룰 수 있어서 많이 쓰인다고 합니다
+특히 PostgreSQL은 관계형이면서도 JSON 데이터를 NoSQL처럼 유연하게 다룰 수 있는 기능을 지원합니다
+
+## NoSQL
+
+문서, 키-값, 그래프 등 구조화되지 않은 데이터를 유연하게 저장합니다  
+열을 미리 정해두지 않아도 되니까 자유롭지만, 대신 데이터 구조가 제각각이어도 아무도 막아주지 않습니다
 
 **정리하면 구조가 정해져 있으면 MySQL, 구조가 계속 바뀌면 NoSQL이 편하다고 보시면 됩니다**
 
 스터디에서는 계속 MySQL 기준으로 진행하겠습니다
 
 ---
-
-
 
 # 테이블의 구성
 
@@ -143,8 +131,6 @@ PostgreSQL은 JSON 데이터를 NoSQL처럼 유연하게 다룰 수 있어서 �
 
 ---
 
-
-
 # SQL 명령어의 분류
 
 이 테이블을 다루는 언어가 SQL이고, SQL은 하는 일에 따라 세가지로 나뉩니다
@@ -164,8 +150,6 @@ PostgreSQL은 JSON 데이터를 NoSQL처럼 유연하게 다룰 수 있어서 �
 데이터 조작 권한을 주고 뺏는 명령어입니다 (`GRANT`, `REVOKE`)
 
 ---
-
-
 
 # 데이터를 조작하는 DML
 
@@ -214,8 +198,6 @@ DELETE FROM member WHERE id = 5;
 
 ---
 
-
-
 # SQL 기본 문법
 
 이제 데이터를 꺼내보는 `SELECT`를 보겠습니다
@@ -234,14 +216,12 @@ SELECT name, age FROM member;
 SELECT * FROM member;
 ```
 
-
 | id  | name | age |
 | --- | ---- | --- |
 | 1   | 이길수  | 24  |
 | 2   | 이삭   | 24  |
 | 3   | 안정민  | 23  |
 | 4   | 김서령  | 20  |
-
 
 보다시피 테이블에 있는 4개의 행이 전부 나온걸 확인할 수 있습니다
 
@@ -253,17 +233,14 @@ SELECT * FROM member;
 SELECT name, age FROM member WHERE age >= 24;
 ```
 
-
 | name | age |
 | ---- | --- |
 | 이삭   | 24  |
 | 이길수  | 24  |
 
-
 나이가 24 이상인 행만 남은걸 볼 수 있습니다
 
 조건에는 아래와 같은 것들을 쓸 수 있습니다
-
 
 | 연산자                      | 설명                   |
 | ------------------------ | -------------------- |
@@ -276,16 +253,11 @@ SELECT name, age FROM member WHERE age >= 24;
 | `IS NULL`, `IS NOT NULL` | 값이 비어있는지의 여부로 찾습니다   |
 | `AND`, `OR`, `NOT`       | 조건을 여러개 묶어줍니다        |
 
-
 여기서 `NULL`은 값이 아직 없다는 뜻인데, `= NULL`이 아니라 `IS NULL`로 비교해야 한다는 점만 알아두시면 좋습니다
 
 ---
 
-
-
 # 묶어서 보고, 정렬해서 보기
-
-
 
 ## GROUP BY
 
@@ -299,13 +271,11 @@ SELECT name, age FROM member WHERE age >= 24;
 SELECT age, COUNT(*) FROM member GROUP BY age;
 ```
 
-
 | age | `COUNT(*)` |
 | --- | ---------- |
 | 24  | 2          |
 | 23  | 1          |
 | 20  | 1          |
-
 
 4개였던 행이 나이별로 묶여서 3개가 된걸 확인할 수 있습니다
 
@@ -319,11 +289,9 @@ group by로 묶고 난 결과에다가 조건을 거는 자리입니다. group b
 SELECT age, COUNT(*) FROM member GROUP BY age HAVING COUNT(*) >= 2;
 ```
 
-
 | age | `COUNT(*)` |
 | --- | ---------- |
 | 24  | 2          |
-
 
 2명 이상인 나이만 남기라고 했더니 `24`살 그룹만 남은걸 확인할 수 있습니다
 
@@ -339,14 +307,12 @@ SELECT age, COUNT(*) FROM member GROUP BY age HAVING COUNT(*) >= 2;
 SELECT name, age FROM member ORDER BY age DESC;
 ```
 
-
 | name | age |
 | ---- | --- |
 | 이길수  | 24  |
 | 이삭   | 24  |
 | 안정민  | 23  |
 | 김서령  | 20  |
-
 
 `ASC`는 오름차순, `DESC`는 내림차순이고 아무것도 안 적으면 오름차순이 기본값입니다
 
@@ -369,23 +335,17 @@ ORDER BY age DESC;
 
 ---
 
-
-
 # JOIN
-
-
 
 ## JOIN의 필요성
 
 이번에는 회원이 쓴 글인 `post` 테이블을 만들어보겠습니다.
 
-
-| member_id | title  |
-| --------- | ------ |
-| 2         | 자바 정리  |
-| 2         | SQL 정리 |
-| 3         | DB 정리  |
-
+| id  | member_id | title  |
+| --- | --------- | ------ |
+| 1   | 2         | 자바 정리  |
+| 2   | 2         | SQL 정리 |
+| 3   | 3         | DB 정리  |
 
 `post`테이블과 `member`테이블을 합쳐서 게시판 같은 또다른 의미 있는 데이터를 만들어 낼 수 있겠죠? 
 
@@ -397,9 +357,21 @@ ORDER BY age DESC;
 
 ![INNER JOIN 동작](media/4st-media/조인-inner.png)
 
-그림에서 주황 점선으로 표시한 `id`와 `member_id`가 두 테이블의 기본키 입니다. 기본키란 행을 구분해줄 수 있는 열입니다
+그림에서 파란 실선으로 표시한 `member.id`와 `post.id`가 두 테이블의 기본키 입니다. 
 
-이 두 열의 값이 같은 것끼리 주황 선으로 이어진걸 확인할 수 있습니다
+#### 기본키(Primary Key)
+
+기본키란 행을 구분해줄 수 있는 열입니다. 기본키는 중복이 없어야하고, 비어있으면 안됩니다!!
+
+그럼 `post`의 `member_id`는 뭘까요?  이 열이 바로 외래키입니다
+
+#### 외래키(Foreign Key)
+
+다른 테이블의 기본키를 가리키는 열입니다
+
+`post`의 `member_id`에는 `member` 테이블의 기본키인 `id` 값이 들어가 있어서, 이 값만 보고도 글을 쓴 회원이 누구인지 찾아갈 수 있습니다
+
+그래서 `member.id`와 `post.member_id`의 값이 같은 것끼리 주황 선으로 이어진걸 확인할 수 있습니다
 
 `2`번인 삭님은 글이 두개라서 `자바 정리`,`SQL 정리` 두 줄과 이어졌고, `3`번인 정민님은 `DB 정리`와 이어졌습니다
 
@@ -413,13 +385,11 @@ FROM member
 INNER JOIN post ON member.id = post.member_id;
 ```
 
-
 | name | title  |
 | ---- | ------ |
 | 이삭   | 자바 정리  |
 | 이삭   | SQL 정리 |
 | 안정민  | DB 정리  |
-
 
 `ON` 뒤에는 두 테이블을 어떤 기준으로 이을지 적어주면 됩니다
 
@@ -433,19 +403,19 @@ INNER JOIN post ON member.id = post.member_id;
 
 ---
 
-
-
 # ORM
 
 JPA에 대해 알아보기에 먼저 ORM에 대해서 짚고 가겠습니다. 
 
-ORM(Object-Relational Mapping)이란 자바의 객체와 관계형 데이터베이스의 테이블을 자동으로 연결해주는 기술입니다.
+ORM(Object-Relational Mapping)이란 프로그래밍 언어의 객체와 관계형 데이터베이스의 테이블을 자동으로 연결해주는 기술입니다.
+
+개발자가 복잡한 SQL 쿼리를 직접 작성하지 않고도 익숙한 객체지향 코드로 데이터를 쉽게 다룰 수 있게 도와줍니다.
 
 또한 3주차때 배운 `CRUD` 작업을 편리하게 할 수 있습니다.
 
 # JPA
 
-JPA(Java Persistence API)는 이런 ORM을 표준으로 사용하는 인터페이스의 모음입니다.
+JPA(Java Persistence API)는 자바에서 ORM을 사용하기 위한 표준 인터페이스의 모음입니다.
 
 정의를 알아보았으니 이걸 왜 사용하는지 알아봐야겠죠?
 
@@ -473,6 +443,73 @@ SELECT name, age FROM member;
 
 이렇게 계속해서 SQL문을 수정해야 합니다... 하지만 앞서 배운 ORM이 있다면 이런 객체와 데이터베이스간의 변환이 자동화됩니다!
 
+## JPA, Hibernate, Spring Data JPA
+
+JPA는 "이렇게 동작해야 한다"는 규칙(인터페이스)만 정해둔 것이라, 혼자서는 아무 일도 하지 못합니다
+
+그래서 실제로 일을 해주는 구현체와, 이걸 더 편하게 쓰게 해주는 도구를 함께 씁니다
+
+| 이름              | 종류                  | 하는 일                                                         |
+| --------------- | ------------------- | ------------------------------------------------------------ |
+| JPA             | 자바 ORM 표준 인터페이스     | 객체와 테이블을 어떻게 연결할지 규칙을 정합니다                                   |
+| Hibernate       | JPA 구현체             | 그 규칙대로 실제 SQL을 만들고 실행합니다                                     |
+| Spring Data JPA | JPA를 한 단계 추상화한 스프링 모듈 | `Repository`만 만들면 `save()`, `findById()` 같은 메서드를 자동으로 만들어줍니다 |
+
+### EntityManager
+
+JPA의 핵심이 되는 것은 `EntityManager`입니다. 엔티티의 저장, 조회, 수정, 삭제(CRUD)를 담당하고, 아래처럼 `interface`로 정의되어 있습니다
+
+```java
+package javax.persistence;
+
+public interface EntityManager {
+
+    public void persist(Object entity);                          // 저장
+
+    public <T> T merge(T entity);                                // 수정
+
+    public void remove(Object entity);                           // 삭제
+
+    public <T> T find(Class<T> entityClass, Object primaryKey);  // 조회
+
+    // ...
+}
+```
+
+JPA는 단순히 명세이기 때문에 구현이 없습니다. 이 `EntityManager` 같은 인터페이스를 직접 구현한 라이브러리가 바로 Hibernate입니다
+
+**JPA와 Hibernate는 마치 자바의 interface와 그 interface를 구현한 class와 같은 관계입니다**
+
+### Spring Data JPA
+
+그런데 뒤에서 작성할 실습 코드를 보면 `EntityManager`는 찾아볼 수 없고, 대신 `Repository`만 사용합니다
+
+Spring Data JPA는 Spring에서 제공하는 모듈 중 하나로, 개발자가 JPA를 더 쉽고 편하게 사용할 수 있도록 도와줍니다
+
+이는 **JPA를 한 단계 추상화시킨** `Repository`**라는 인터페이스를 제공**하는 방식으로 이루어집니다
+
+`Repository` 인터페이스에 정해진 규칙대로 메서드를 적으면, Spring이 알아서 그 메서드 이름에 맞는 쿼리를 날리는 구현체를 만들어서 등록해줍니다
+
+그리고 이 구현체도 내부에서는 결국 `EntityManager`를 사용합니다. `Repository`의 기본 구현체인 `SimpleJpaRepository`의 코드를 보면
+
+```java
+public class SimpleJpaRepository<T, ID> implements JpaRepositoryImplementation<T, ID> {
+
+    private final EntityManager em;
+
+    public Optional<T> findById(ID id) {
+        // ...
+        return Optional.ofNullable(em.find(domainType, id));
+    }
+}
+```
+
+`findById()`가 내부에서 `em.find()`를 호출하고 있는 걸 볼 수 있습니다
+
+정리하면 우리가 `memberRepository.save(member)`처럼 `Repository`의 메서드만 호출하면, `Repository`(Spring Data JPA) → `EntityManager`(JPA) → Hibernate → JDBC → DB 순서로 내려가서 처리됩니다
+
+세 가지의 관계가 더 궁금하신 분은  [JPA vs Hibernate vs Spring Data JPA](https://suhwan.dev/2019/02/24/jpa-vs-hibernate-vs-spring-data-jpa/)를 읽어보시는걸 추천합니다!
+
 ## JPA 동작 과정
 
 그럼 JPA가 실제로 어떻게 동작하는지 그림으로 살펴보겠습니다
@@ -481,23 +518,20 @@ SELECT name, age FROM member;
 
 왼쪽에는 `Member` 객체가 있고, 오른쪽에는 DB에 저장되어 있는 `member` 테이블이 있습니다
 
-그림의 화살표를 번호 순서대로 따라가보겠습니다
+가운데에는 앞에서 본 Spring Data JPA의 `Repository`와, 실제로 SQL을 만드는 JPA(Hibernate)가 있습니다
 
+그림의 화살표를 번호 순서대로 따라가보겠습니다
 
 | 단계  | 흐름           | 하는 일                                                                        |
 | --- | ------------ | --------------------------------------------------------------------------- |
-| ①   | 애플리케이션 → JPA | `memberRepository.save(member)`처럼 `Repository`를 통해 `Member` 객체를 JPA에게 넘겨줍니다 |
-| ②   | JPA → DB     | JPA가 그 객체를 보고 SQL을 직접 만들어서, JDBC를 통해 DB로 보냅니다                               |
-| ③   | DB → JPA     | DB가 SQL을 실행하고 그 결과를 JPA에게 돌려줍니다                                             |
-| ④   | JPA → 애플리케이션 | JPA가 그 결과를 다시 `Member` 객체에 돌려줍니다                                            |
-
-
-
+| ①   | 애플리케이션 → Repository | `memberRepository.save(member)`처럼 Spring Data JPA의 `Repository`에 `Member` 객체를 넘기면, Repository가 JPA에게 전달합니다 |
+| ②   | JPA → DB            | JPA가 그 객체를 보고 SQL을 직접 만들어서, JDBC를 통해 DB로 보냅니다                                                  |
+| ③   | DB → JPA            | DB가 SQL을 실행하고 그 결과를 JPA에게 돌려줍니다                                                                |
+| ④   | Repository → 애플리케이션 | JPA가 그 결과를 `Member` 객체에 담고, Repository를 거쳐 애플리케이션에 돌려줍니다                                       |
 
 ## JPA의 장점
 
 동작 과정을 봤으니, JPA를 쓰면 어떤 점이 좋은지 정리해보겠습니다
-
 
 | 장점    | 설명                                   |
 | ----- | ------------------------------------ |
@@ -506,7 +540,6 @@ SELECT name, age FROM member;
 | 이식성   | DB를 바꿔도 코드는 그대로 둘 수 있습니다             |
 | 지연 로딩 | 연관된 데이터는 실제로 쓰는 시점에 가져옵니다            |
 | 트랜잭션  | 위 작업들을 하나로 묶어서 전부 성공하거나 전부 실패하게 해줍니다 |
-
 
 **지연 로딩**
 
@@ -532,8 +565,6 @@ SELECT name, age FROM member;
 
 ---
 
-
-
 # JPA 활용해보기
 
 이제 자바 코드에서 JPA를 어떻게 쓰는지 보겠습니다
@@ -548,12 +579,13 @@ JPA는 이 표시가 붙어있는 클래스만 관리해줍니다
 @Entity
 public class Member {
 
+    @Id //
+    private Long id;
+
     private String name;
     private int age;
 }
 ```
-
-
 
 ## @Table
 
@@ -588,7 +620,6 @@ public class Member {
 
 ```java
 @Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 ```
 
@@ -598,14 +629,18 @@ private Long id;
 
 그래서 기본키를 자동으로 만들어달라고 맡기는게 `@GeneratedValue`입니다
 
-번호를 누가 만들어주냐에 따라 전략이 나뉘는데,  자주 쓰게될 두가지만 보겠습니다
+```java
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long id;
+```
 
+번호를 누가 만들어주냐에 따라 전략이 나뉘는데,  자주 쓰게될 두가지만 보겠습니다
 
 | 전략         | ID를 만드는 곳                  | 주로 쓰는 DB           |
 | ---------- | -------------------------- | ------------------ |
 | `IDENTITY` | DB의 `auto_increment`에 맡깁니다 | MySQL              |
 | `SEQUENCE` | DB의 시퀀스에서 번호를 받아옵니다        | PostgreSQL, Oracle |
-
 
 **MySQL을 쓰신다면** `IDENTITY`**, PostgreSQL이나 Oracle을 쓰신다면** `SEQUENCE`**라고 기억하시면 됩니다**
 
@@ -620,13 +655,11 @@ private Long id;
 private String name;
 ```
 
-
 | 속성         | 하는 일              | 예시                   |
 | ---------- | ----------------- | -------------------- |
 | `name`     | 연결할 열의 이름을 정합니다   | `name = "user_name"` |
 | `nullable` | 값이 비어있어도 되는지 정합니다 | `nullable = false`   |
 | `length`   | 문자열의 최대 길이를 정합니다  | `length = 20`        |
-
 
 `@Table`과 마찬가지로 필드 이름과 열 이름이 같으면 `@Column`도 생략할 수 있습니다
 
@@ -665,13 +698,7 @@ private Member member;
 
 `@JoinColumn`에는 어느 열이 외래키인지를 적어주는데, `post` 테이블이 들고 있던 그 `member_id`가 들어갑니다
 
-여기서 외래키(Foreign Key)는 다른 테이블의 기본키를 가리키는 열입니다
-
-`post`의 `member_id`에는 `member` 테이블의 기본키인 `id` 값이 들어가 있어서, 이 값만 보고도 글을 쓴 회원이 누구인지 찾아갈 수 있습니다
-
 ---
-
-
 
 # 실습해보기
 
@@ -758,6 +785,8 @@ Configuration 이 기본적으로 Properties라고 설정되어있을텐데 이�
 
 `Lombok`, `Spring Web`, `Spring Data JPA`, `MySQL Driver` 네개를 추가해줍니다
 
+`Spring Data JPA`를 추가하면 JPA와 Hibernate도 함께 들어옵니다
+
 ![의존성 추가](media/4st-media/실습-의존성.png)
 
 ## DB 연결 정보 적기
@@ -790,7 +819,6 @@ spring:
 
 `ddl-auto`는 애플리케이션을 켤 때 테이블을 어떻게 할지 정해주는 값입니다
 
-
 | 값             | 하는 일                                        |
 | ------------- | ------------------------------------------- |
 | `create`      | 엔티티와 매핑되는 테이블을 자동으로 만들고, 이미 있으면 지우고 다시 만듭니다 |
@@ -799,10 +827,7 @@ spring:
 | `validate`    | 엔티티 클래스와 테이블이 정상적으로 매핑되는지 검사만 합니다           |
 | `none`        | 아무 일도 일어나지 않습니다                             |
 
-
 `create`**는 켤 때마다 테이블을 지우고 다시 만들기 때문에, 데이터가 남아야 하는 곳에서는 절대 쓰시면 안됩니다**
-
-`hibernate` 에 대해 더 자세히 알고싶으신 분은  [https://suhwan.dev/2019/02/24/jpa-vs-hibernate-vs-spring-data-jpa/](https://suhwan.dev/2019/02/24/jpa-vs-hibernate-vs-spring-data-jpa/)을 참고해주시면 됩니다!
 
 ## 환경변수 넣기
 
@@ -834,24 +859,18 @@ spring:
 
 ---
 
-
-
 # 코드 작성해보기
 
 학생과 강의를 등록하고, 학생 정보를 조회·수정·삭제하는 기능을 만들어보겠습니다
-
 
 | 클래스       | 가지고 있는 값                        |
 | --------- | ------------------------------- |
 | `Course`  | `id`, `courseName`, `professor` |
 | `Student` | `id`, `name`, `major`           |
 
-
 강의 하나에는 학생이 여러명 들어갈 수 있으니, 강의(One)와 학생(Many)의 관계가 됩니다
 
 ## Domain 만들기
-
-
 
 ### Course
 
@@ -929,8 +948,6 @@ Student.builder()
         .build();
 ```
 
-
-
 #### 가독성 향상
 
 지금은 파라미터의 개수가 적어서 가독성이 나쁘지 않아보이지만 파라미터의 개수가 더욱 늘어난다면....?
@@ -981,8 +998,6 @@ public class Student {
 }
 ```
 
-
-
 ## Repository 만들기
 
 `repository` 패키지에 인터페이스 두개를 만들어줍니다
@@ -997,7 +1012,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 }
 ```
 
-`JpaRepository`를 상속받기만 하면 `save`, `findById`, `findAll`, `deleteById` 같은 메서드를 알아서 만들어줍니다
+`JpaRepository`는 앞에서 본 Spring Data JPA가 제공하는 인터페이스라서, 상속받기만 하면 `save`, `findById`, `findAll`, `deleteById` 같은 메서드를 알아서 만들어줍니다
 
 ## DTO 만들기
 
@@ -1135,14 +1150,10 @@ public class CourseService {
 3. `professor`에 `courseSaveRequestDto.getProfessor()`로 꺼낸 교수 이름을 넣습니다
 4. `build()`로 `Course` 객체를 완성합니다
 
-
-
 #### 3. `deleteCourse()`
 
 1. `courseRepository.deleteById()`에 `courseId`를 넣어 해당 강의를 지웁니다
 2. 앞에서 본 `cascade = CascadeType.ALL` 때문에 이 강의에 들어있던 학생들도 같이 지워집니다
-
-
 
 #### 4. `getAllCourse()`
 
@@ -1150,8 +1161,6 @@ public class CourseService {
 2. `stream()`으로 바꿔서 하나씩 처리할 수 있게 합니다
 3. `map()`으로 각 `Course`를 `CourseInfoResponseDto.from()`에 넣어 DTO로 바꿉니다
 4. `toList()`로 다시 List로 모읍니다
-
-
 
 ### StudentService
 
@@ -1229,14 +1238,10 @@ public class StudentService {
 6. `course`에 1번에서 찾은 강의 객체를 통째로 넣습니다
 7. `build()`로 `Student 객체를 완성합니다
 
-
-
 #### 2. `getStudent()`
 
 1. `studentRepository.findById()`에 `studentId`를 넣어 학생을 찾고, 없으면 `요청하신 학생 정보를 찾을 수 없습니다.` 예외를 던집니다
 2. `StudentInfoResponseDto.from()`으로 찾은 학생을 응답용 DTO로 바꿔 돌려줍니다
-
-
 
 #### 3. `updateStudent()`
 
@@ -1253,8 +1258,6 @@ public class StudentService {
 
 1. `studentRepository.deleteById()`에 `studentId`를 넣어 학생 한명만 지웁니다
 2. 학생은 자식 쪽이라 학생을 지워도 강의는 그대로 남아있습니다
-
-
 
 #### 5. `getAllStudent()`
 
@@ -1319,8 +1322,6 @@ public class CourseController {
 4. `ResponseEntity.status(HttpStatus.CREATED)`로 새로 만들어졌다는 뜻의 `201 CREATED` 상태 코드를 정합니다
 5. `body()`에 Service가 돌려준 DTO를 넣어 응답합니다. 이 DTO에는 DB가 매겨준 `id`까지 담겨있습니다
 
-
-
 #### 5. `deleteCourse()`
 
 1. `DELETE /courses/1`처럼 주소 끝에 지울 강의의 `id`를 붙여서 요청하면 실행됩니다
@@ -1328,15 +1329,11 @@ public class CourseController {
 3. `courseService.deleteCourse()`에 `courseId`를 넘겨 강의를 지웁니다
 4. 지우고 나면 돌려줄 데이터가 없으니 반환 타입을 `ResponseEntity`로 두고, `204 NO_CONTENT`와 함께 `build()`로 빈 응답을 보냅니다
 
-
-
 #### 6. `getAllCourse()`
 
 1. `GET /courses`로 요청이 오면 실행됩니다
 2. `courseService.getAllCourse()`로 모든 강의를 DTO 리스트로 받아옵니다
 3. `200 OK` 상태 코드와 함께 `body()`에 리스트를 넣어 응답합니다
-
-
 
 ### StudentController
 
@@ -1386,16 +1383,12 @@ public class StudentController {
 3. `studentService.saveStudent()`에 `studentSaveRequestDto`를 그대로 넘겨 학생을 저장합니다
 4. `201 CREATED` 상태 코드와 함께 `body()`에 Service가 돌려준 DTO를 넣어 응답합니다
 
-
-
 #### 2. `getStudent()`
 
 1. `GET /students/1`처럼 주소 끝에 조회할 학생의 `id`를 붙여서 요청하면 실행됩니다
 2. `@PathVariable`이 주소의 `{studentId}` 자리에 있는 `1`을 꺼내서 `studentId`에 넣어줍니다
 3. `studentService.getStudent()`에 `studentId`를 넘겨 학생 한명을 DTO로 받아옵니다
 4. `200 OK` 상태 코드와 함께 `body()`에 DTO를 넣어 응답합니다
-
-
 
 #### 3. `updateStudent()`
 
@@ -1404,8 +1397,6 @@ public class StudentController {
 3. `studentService.updateStudent()`에 `studentId`와 `studentSaveRequestDto`를 같이 넘겨 학생 정보를 바꿉니다
 4. `200 OK` 상태 코드와 함께 `body()`에 바뀐 학생의 DTO를 넣어 응답합니다
 
-
-
 #### 4. `deleteStudent()`
 
 1. `DELETE /students/1`처럼 주소 끝에 지울 학생의 `id`를 붙여서 요청하면 실행됩니다
@@ -1413,15 +1404,11 @@ public class StudentController {
 3. `studentService.deleteStudent()`에 `studentId`를 넘겨 학생을 지웁니다
 4. 돌려줄 데이터가 없으니 반환 타입을 `ResponseEntity<Void>`로 두고, `204 NO_CONTENT`와 함께 `build()`로 빈 응답을 보냅니다
 
-
-
 #### 5. `getAllStudent()`
 
 1. `GET /students`로 요청이 오면 실행됩니다
 2. `studentService.getAllStudent()`로 모든 학생을 DTO 리스트로 받아옵니다
 3. `200 OK` 상태 코드와 함께 `body()`에 리스트를 넣어 응답합니다
-
-
 
 ## 포스트맨으로 테스트하기
 

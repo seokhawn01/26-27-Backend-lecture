@@ -10,11 +10,12 @@
   .jn  { font-size:30px; fill:#111; text-anchor:end; }
   .cap { font-size:24px; fill:#8a8a8a; text-anchor:middle; }
   .tag { font-size:24px; fill:#d97706; text-anchor:middle; }
+  .pk  { font-size:24px; fill:#2563eb; text-anchor:middle; }
   .eq  { font-size:32px; fill:#d97706; text-anchor:middle; }
   .dot { fill:#d97706; }
   .bx  { fill:none; stroke:#111; stroke-width:3.5; }
   .ln  { stroke:#111; stroke-width:2.5; }
-  .kc  { fill:none; stroke:#d97706; stroke-width:4; stroke-dasharray:10 8; }
+  .kc  { fill:none; stroke:#2563eb; stroke-width:5; }
   .cn  { fill:none; stroke:#d97706; stroke-width:4.5; }
   .ar  { fill:none; stroke:#111; stroke-width:3.5; }
 </style>
@@ -25,63 +26,69 @@
 </defs>
 <rect width="1140" height="1140" fill="#ffffff"/>
 <g class="lbl" transform="translate(0,-40)">
-  <text class="ttl" x="280" y="250">member</text>
-  <text class="ttl" x="860" y="250">post</text>
+  <text class="ttl" x="235" y="250">member</text>
+  <text class="ttl" x="815" y="250">post</text>
 
-  <rect x="60" y="420" width="440" height="140" fill="#eaf1fb"/>
-  <rect x="640" y="350" width="440" height="210" fill="#eaf1fb"/>
+  <rect x="60" y="420" width="350" height="140" fill="#eaf1fb"/>
+  <rect x="550" y="350" width="530" height="210" fill="#eaf1fb"/>
 
-  <rect class="bx" x="60" y="280" width="440" height="280" rx="18"/>
-  <line class="bx" x1="60" y1="350" x2="500" y2="350"/>
-  <line class="ln" x1="60" y1="420" x2="500" y2="420"/>
-  <line class="ln" x1="60" y1="490" x2="500" y2="490"/>
-  <line class="ln" x1="340" y1="280" x2="340" y2="560"/>
+  <rect class="bx" x="60" y="280" width="350" height="280" rx="18"/>
+  <line class="bx" x1="60" y1="350" x2="410" y2="350"/>
+  <line class="ln" x1="60" y1="420" x2="410" y2="420"/>
+  <line class="ln" x1="60" y1="490" x2="410" y2="490"/>
+  <line class="ln" x1="280" y1="280" x2="280" y2="560"/>
 
-  <text class="hd"  x="200" y="325">name</text>
-  <text class="kh"  x="420" y="325">id</text>
-  <text class="cel" x="200" y="395">이길수</text>
-  <text class="key" x="420" y="395">1</text>
-  <text class="cel" x="200" y="465">이삭</text>
-  <text class="key" x="420" y="465">2</text>
-  <text class="cel" x="200" y="535">안정민</text>
-  <text class="key" x="420" y="535">3</text>
+  <text class="hd"  x="170" y="325">name</text>
+  <text class="kh"  x="345" y="325">id</text>
+  <text class="cel" x="170" y="395">이길수</text>
+  <text class="key" x="345" y="395">1</text>
+  <text class="cel" x="170" y="465">이삭</text>
+  <text class="key" x="345" y="465">2</text>
+  <text class="cel" x="170" y="535">안정민</text>
+  <text class="key" x="345" y="535">3</text>
 
-  <rect class="bx" x="640" y="280" width="440" height="280" rx="18"/>
-  <line class="bx" x1="640" y1="350" x2="1080" y2="350"/>
-  <line class="ln" x1="640" y1="420" x2="1080" y2="420"/>
-  <line class="ln" x1="640" y1="490" x2="1080" y2="490"/>
-  <line class="ln" x1="860" y1="280" x2="860" y2="560"/>
+  <rect class="bx" x="550" y="280" width="530" height="280" rx="18"/>
+  <line class="bx" x1="550" y1="350" x2="1080" y2="350"/>
+  <line class="ln" x1="550" y1="420" x2="1080" y2="420"/>
+  <line class="ln" x1="550" y1="490" x2="1080" y2="490"/>
+  <line class="ln" x1="750" y1="280" x2="750" y2="560"/>
+  <line class="ln" x1="950" y1="280" x2="950" y2="560"/>
 
-  <text class="kh"  x="750" y="325">member_id</text>
-  <text class="hd"  x="970" y="325">title</text>
-  <text class="key" x="750" y="395">2</text>
-  <text class="cel" x="970" y="395">자바 정리</text>
-  <text class="key" x="750" y="465">2</text>
-  <text class="cel" x="970" y="465">SQL 정리</text>
-  <text class="key" x="750" y="535">3</text>
-  <text class="cel" x="970" y="535">DB 정리</text>
+  <text class="kh"  x="650" y="325">member_id</text>
+  <text class="hd"  x="850" y="325">title</text>
+  <text class="hd"  x="1015" y="325">id</text>
+  <text class="key" x="650" y="395">2</text>
+  <text class="cel" x="850" y="395">자바 정리</text>
+  <text class="cel" x="1015" y="395">1</text>
+  <text class="key" x="650" y="465">2</text>
+  <text class="cel" x="850" y="465">SQL 정리</text>
+  <text class="cel" x="1015" y="465">2</text>
+  <text class="key" x="650" y="535">3</text>
+  <text class="cel" x="850" y="535">DB 정리</text>
+  <text class="cel" x="1015" y="535">3</text>
 
-  <rect class="kc" x="340" y="280" width="160" height="280" rx="18"/>
-  <rect class="kc" x="640" y="280" width="220" height="280" rx="18"/>
+  <rect class="kc" x="280" y="280" width="130" height="280" rx="18"/>
+  <rect class="kc" x="950" y="280" width="130" height="280" rx="18"/>
 
-  <path class="cn" d="M 500 455 L 640 385"/>
-  <path class="cn" d="M 500 455 L 640 455"/>
-  <path class="cn" d="M 500 525 L 640 525"/>
-  <circle class="dot" cx="500" cy="455" r="9"/>
-  <circle class="dot" cx="500" cy="525" r="9"/>
-  <circle class="dot" cx="640" cy="385" r="9"/>
-  <circle class="dot" cx="640" cy="455" r="9"/>
-  <circle class="dot" cx="640" cy="525" r="9"/>
+  <path class="cn" d="M 410 455 L 550 385"/>
+  <path class="cn" d="M 410 455 L 550 455"/>
+  <path class="cn" d="M 410 525 L 550 525"/>
+  <circle class="dot" cx="410" cy="455" r="9"/>
+  <circle class="dot" cx="410" cy="525" r="9"/>
+  <circle class="dot" cx="550" cy="385" r="9"/>
+  <circle class="dot" cx="550" cy="455" r="9"/>
+  <circle class="dot" cx="550" cy="525" r="9"/>
 
-  <circle cx="595" cy="407" r="21" fill="#ffffff"/>
-  <text class="eq" x="595" y="419">=</text>
-  <circle cx="595" cy="455" r="21" fill="#ffffff"/>
-  <text class="eq" x="595" y="467">=</text>
-  <circle cx="595" cy="525" r="21" fill="#ffffff"/>
-  <text class="eq" x="595" y="537">=</text>
+  <circle cx="505" cy="407" r="21" fill="#ffffff"/>
+  <text class="eq" x="505" y="419">=</text>
+  <circle cx="505" cy="455" r="21" fill="#ffffff"/>
+  <text class="eq" x="505" y="467">=</text>
+  <circle cx="505" cy="525" r="21" fill="#ffffff"/>
+  <text class="eq" x="505" y="537">=</text>
 
-  <text class="tag" x="420" y="610">조인 기준 열</text>
-  <text class="tag" x="750" y="610">조인 기준 열</text>
+  <text class="pk" x="345" y="610">기본키</text>
+  <text class="tag" x="650" y="610">외래키</text>
+  <text class="pk" x="1015" y="610">기본키</text>
 
   <text class="jn" x="470" y="685">INNER JOIN</text>
   <path class="ar" marker-end="url(#a)" d="M 570 640 L 570 708"/>
