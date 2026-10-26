@@ -13,7 +13,7 @@
   - [3.1 행(Row) / 레코드(Record)](#행row--레코드record)
   - [3.2 열(Column) / 속성(Attribute)](#열column--속성attribute)
 - [4. SQL 명령어의 분류](#sql-명령어의-분류)
-  - [4.1 DDL, DML, DCL](#ddl-dml-dcl)
+  - [4.1 DDL, DML, DCL, TCL](#ddl-dml-dcl-tcl)
 - [5. 데이터를 조작하는 DML](#데이터를-조작하는-dml)
   - [5.1 INSERT](#insert)
   - [5.2 UPDATE](#update)
@@ -88,7 +88,7 @@
 
 ## 표로 저장하는 RDBMS
 
-RDBMS는 데이터를 행과 열로 이루어진 2차원 테이블 형태로 저장합니다
+RDBMS(관계형 데이터베이스 관리 시스템)는 데이터를 행과 열로 이루어진 2차원 테이블 형태로 저장합니다
 
 ![member 테이블 구조](media/4st-media/테이블-구조.png)
 
@@ -100,8 +100,8 @@ RDBMS는 데이터를 행과 열로 이루어진 2차원 테이블 형태로 저
 
 ## NoSQL
 
-문서, 키-값, 그래프 등 구조화되지 않은 데이터를 유연하게 저장합니다  
-열을 미리 정해두지 않아도 되니까 자유롭지만, 대신 데이터 구조가 제각각이어도 아무도 막아주지 않습니다
+문서, 키-값, 그래프 등 테이블이 아닌 형태로 데이터를 유연하게 저장합니다  
+형태가 아예 없는 건 아니고, MongoDB는 JSON 같은 문서 형태로 저장합니다
 
 **정리하면 구조가 정해져 있으면 MySQL, 구조가 계속 바뀌면 NoSQL이 편하다고 보시면 됩니다**
 
@@ -133,9 +133,9 @@ RDBMS는 데이터를 행과 열로 이루어진 2차원 테이블 형태로 저
 
 # SQL 명령어의 분류
 
-이 테이블을 다루는 언어가 SQL이고, SQL은 하는 일에 따라 세가지로 나뉩니다
+이 테이블을 다루는 언어가 SQL이고, SQL은 하는 일에 따라 네가지로 나뉩니다
 
-## DDL, DML, DCL
+## DDL, DML, DCL, TCL
 
 **DDL(Data Definition Language)**
 
@@ -148,6 +148,10 @@ RDBMS는 데이터를 행과 열로 이루어진 2차원 테이블 형태로 저
 **DCL(Data Control Language)**
 
 데이터 조작 권한을 주고 뺏는 명령어입니다 (`GRANT`, `REVOKE`)
+
+**TCL(Transaction Control Language)**
+
+여러 작업을 하나로 묶은 트랜잭션을 확정하거나 되돌리는 명령어입니다 (`COMMIT`, `ROLLBACK`)
 
 ---
 
@@ -261,7 +265,7 @@ SELECT name, age FROM member WHERE age >= 24;
 
 ## GROUP BY
 
-같은 값을 가진 행들을 하나로 묶어주는 자리입니다
+내가 원하는 컬럼을 기준으로 같은 값을 가진 행들을 그룹으로 묶어서 사용할 수 있습니다
 
 `member` 테이블을 보면 이길수와 이삭이 둘 다 `24`살인걸 확인할 수 있습니다
 
@@ -283,7 +287,7 @@ SELECT age, COUNT(*) FROM member GROUP BY age;
 
 ## HAVING
 
-group by로 묶고 난 결과에다가 조건을 거는 자리입니다. group by와 세트라고 생각하시면 편합니다
+그룹으로 묶고 난 결과에다가 조건을 거는 자리입니다. 주로 group by와 함께 쓰지만, group by 없이 쓰면 테이블 전체를 하나의 그룹으로 보고 조건을 겁니다
 
 ```sql
 SELECT age, COUNT(*) FROM member GROUP BY age HAVING COUNT(*) >= 2;
@@ -295,7 +299,7 @@ SELECT age, COUNT(*) FROM member GROUP BY age HAVING COUNT(*) >= 2;
 
 2명 이상인 나이만 남기라고 했더니 `24`살 그룹만 남은걸 확인할 수 있습니다
 
-`WHERE`랑 뭐가 다른지 헷갈리실텐데, `WHERE`는 group by로 묶기 전의 행한테 거는 조건이고 `HAVING`은 group by로 묶은 다음의 그룹에 거는 조건입니다.
+`WHERE`랑 뭐가 다른지 헷갈리실텐데, `WHERE`는 group by로 묶기 전의 행한테 거는 조건이고 `HAVING`은 일반적으론 group by로 묶은 다음의 그룹에 거는 조건입니다.
 
 그렇다면 실행순서는 `WHERE` 이 `GROUP BY` 보다 빠르겠죠?
 
@@ -304,19 +308,19 @@ SELECT age, COUNT(*) FROM member GROUP BY age HAVING COUNT(*) >= 2;
 결과를 정렬하는 자리입니다
 
 ```sql
-SELECT name, age FROM member ORDER BY age DESC;
+SELECT id, name, age FROM member ORDER BY age DESC, id DESC;
 ```
 
-| name | age |
-| ---- | --- |
-| 이길수  | 24  |
-| 이삭   | 24  |
-| 안정민  | 23  |
-| 김서령  | 20  |
+| id  | name | age |
+| --- | ---- | --- |
+| 2   | 이삭   | 24  |
+| 1   | 이길수  | 24  |
+| 3   | 안정민  | 23  |
+| 4   | 김서령  | 20  |
 
 `ASC`는 오름차순, `DESC`는 내림차순이고 아무것도 안 적으면 오름차순이 기본값입니다
 
-`order by` 뒤에 정렬기준이 될 열을 쓰시면 됩니다. 여기선 `age` 를 썼으니 나이가 큰 순서대로 줄세워진걸 확인할 수 있습니다
+`order by` 뒤에 정렬기준이 될 열을 쓰시면 되고, 쉼표로 여러 개 적을 수도 있습니다. 여기선 먼저 `age`로 나이가 큰 순서대로 줄세우고, `age`가 같은 이길수와 이삭은 `id`가 큰 순서대로 한번 더 정렬된걸 확인할 수 있습니다
 
 ## 작성 순서와 실행 순서
 
@@ -353,7 +357,7 @@ ORDER BY age DESC;
 
 ## INNER JOIN
 
-`INNER JOIN`은 양쪽 테이블에 모두 있는 데이터만 남기는 조인입니다
+`INNER JOIN`은 두 테이블의 행을 합치는데, `ON` 조건을 만족하는 행들만 출력하는 조인입니다
 
 ![INNER JOIN 동작](media/4st-media/조인-inner.png)
 
@@ -407,7 +411,7 @@ INNER JOIN post ON member.id = post.member_id;
 
 JPA에 대해 알아보기에 먼저 ORM에 대해서 짚고 가겠습니다. 
 
-ORM(Object-Relational Mapping)이란 프로그래밍 언어의 객체와 관계형 데이터베이스의 테이블을 자동으로 연결해주는 기술입니다.
+ORM(Object-Relational Mapping)이란 프로그래밍 언어의 객체와 관계형 데이터베이스의 테이블을 매핑해주는 기술입니다.
 
 개발자가 복잡한 SQL 쿼리를 직접 작성하지 않고도 익숙한 객체지향 코드로 데이터를 쉽게 다룰 수 있게 도와줍니다.
 
@@ -427,21 +431,32 @@ JPA(Java Persistence API)는 자바에서 ORM을 사용하기 위한 표준 인�
 
 하지만 JDBC를 직접 사용하면 개발자가 필요한 SQL을 직접 작성해야 하고, 요구사항이 변경될 때마다 SQL과 관련 코드도 함께 수정해야 합니다
 
-예를 들어 처음에는 회원의 이름만 조회하면 되는 요구사항이었다고 해보겠습니다
+뒤에서 실습할 강의(`Course`) 목록 조회 기능으로 예를 들어보겠습니다
 
-```sql
--- 회원의 이름을 출력하는 요구사항
-SELECT name FROM member;
+```java
+// JDBC로 강의 목록 조회하기
+public List<CourseInfoResponseDto> getAllCourse() throws SQLException {
+    String sql = "SELECT id, course_name FROM course";
+
+    try (Connection conn = dataSource.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        List<CourseInfoResponseDto> result = new ArrayList<>();
+        while (rs.next()) {
+            result.add(CourseInfoResponseDto.builder()
+                    .id(rs.getLong("id"))
+                    .courseName(rs.getString("course_name"))
+                    .build());
+        }
+        return result;
+    }
+}
 ```
 
-그런데 나이도 같이 보여달라는 요청이 들어왔다면?
+SQL을 문자열로 직접 적고, 꺼내온 결과(`ResultSet`)를 한 칸씩 꺼내서 DTO에 직접 옮겨 담아야 합니다
 
-```sql
--- 여기서 나이도 같이 보여달라고 한다면....?
-SELECT name, age FROM member;
-```
-
-이렇게 계속해서 SQL문을 수정해야 합니다... 하지만 앞서 배운 ORM이 있다면 이런 객체와 데이터베이스간의 변환이 자동화됩니다!
+JPA는 이렇게 SQL을 만들고, 결과를 객체에 옮겨 담는 과정을 자동화해줍니다!
 
 ## JPA, Hibernate, Spring Data JPA
 
