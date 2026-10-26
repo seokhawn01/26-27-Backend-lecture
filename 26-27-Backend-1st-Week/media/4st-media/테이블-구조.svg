@@ -18,7 +18,7 @@
 </defs>
 <rect width="1140" height="1140" fill="#ffffff"/>
 <g class="lbl" transform="translate(0,40)">
-  <text class="ttl" x="465" y="320">member 테이블</text>
+  <text class="ttl" x="465" y="320">members 테이블</text>
 
   <rect x="120" y="530" width="690" height="80" fill="#eaf1fb"/>
 

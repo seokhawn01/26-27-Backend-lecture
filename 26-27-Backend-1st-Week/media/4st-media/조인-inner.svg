@@ -26,8 +26,8 @@
 </defs>
 <rect width="1140" height="1140" fill="#ffffff"/>
 <g class="lbl" transform="translate(0,-40)">
-  <text class="ttl" x="235" y="250">member</text>
-  <text class="ttl" x="815" y="250">post</text>
+  <text class="ttl" x="235" y="250">members</text>
+  <text class="ttl" x="815" y="250">posts</text>
 
   <rect x="60" y="420" width="350" height="140" fill="#eaf1fb"/>
   <rect x="550" y="350" width="530" height="210" fill="#eaf1fb"/>

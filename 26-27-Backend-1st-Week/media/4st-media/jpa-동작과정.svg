@@ -81,7 +81,7 @@
   <text class="cel" x="1442" y="453">24</text>
   <text class="cel" x="1277" y="523">안정민</text>
   <text class="cel" x="1442" y="523">23</text>
-  <text class="sub" x="1360" y="605">member 테이블</text>
+  <text class="sub" x="1360" y="605">members 테이블</text>
 
   <path class="ar" marker-end="url(#ao)" d="M 460 250 L 618 250"/>
   <path class="ar" marker-end="url(#ao)" d="M 620 340 L 462 340"/>
